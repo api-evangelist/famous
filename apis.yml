@@ -1,7 +1,29 @@
 aid: famous
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/famous.png
 name: Famous
-description: Famous is a company surfaced as a portfolio company of insight-partners and added to the
-  API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Famous (famous.co) now redirects to Amaze (amaze.co), the creator-commerce
+  platform operated by Amaze Holdings, Inc. Amaze describes itself as building
+  the operating system for creator-led businesses, bringing commerce, content,
+  media, and live shopping into one connected ecosystem. Its products include
+  Amaze Commerce (creator storefronts and AI-powered product creation), Amaze
+  Live (shoppable livestreams), and Amaze Media (performance marketing and
+  audience targeting for brands). The company reports 190K+ creators, 1.7B+
+  lifetime fan reach, and operations across 183 countries. Surfaced originally
+  as a portfolio company of Insight Partners and added to the API Evangelist
+  network as a stub; no public developer API, SDK, or documentation surface was
+  found during enrichment (identity and domain-security artifacts only).
 url: https://raw.githubusercontent.com/api-evangelist/famous/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -9,11 +31,19 @@ x-backed-by:
 - insight-partners
 x-tier: stub
 x-tier-reason: portfolio-lead
+x-rebranded-to: amaze
+x-rebrand-note: famous.co returns 301 -> amaze.co; operating company is Amaze Holdings, Inc.
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
+- Creator Economy
+- Commerce
+- Live Shopping
+- Media
+- Ecommerce
+- Marketing
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -21,5 +51,24 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/famous-domain-security.yml
 - type: Website
-  url: https://famous.co/
+  url: https://amaze.co/
+- type: About
+  url: https://amaze.co/about-us
+- type: Blog
+  url: https://blog.amaze.co/
+- type: Support
+  url: https://amaze.co/contact
+- type: PrivacyPolicy
+  url: https://www.amaze.co/policies/corporate/privacy-policy
+- type: InvestorRelations
+  url: https://ir.amaze.co/
+- type: Careers
+  url: https://jobs.lever.co/amaze
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
