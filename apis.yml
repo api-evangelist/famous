@@ -1,29 +1,35 @@
 aid: famous
 accessModel:
-  pricing: unknown
-  onboarding: unknown
-  trial: false
+  pricing: freemium
+  onboarding: self-service
+  trial: true
   try_now: false
-  public: false
-  label: Unknown
-  confidence: low
-  source: []
-  generated: '2026-07-22'
-  method: derived
+  public: true
+  label: Freemium
+  confidence: medium
+  source:
+  - https://amazecommerce.com/pricing
+  - https://api.teespring.com/docs
+  generated: '2026-08-13'
+  method: searched
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/famous.png
 name: Famous
 description: >-
-  Famous (famous.co) now redirects to Amaze (amaze.co), the creator-commerce
+  Famous (famous.co) returns a 301 to Amaze (amaze.co), the creator-commerce
   platform operated by Amaze Holdings, Inc. Amaze describes itself as building
   the operating system for creator-led businesses, bringing commerce, content,
   media, and live shopping into one connected ecosystem. Its products include
-  Amaze Commerce (creator storefronts and AI-powered product creation), Amaze
-  Live (shoppable livestreams), and Amaze Media (performance marketing and
-  audience targeting for brands). The company reports 190K+ creators, 1.7B+
-  lifetime fan reach, and operations across 183 countries. Surfaced originally
-  as a portfolio company of Insight Partners and added to the API Evangelist
-  network as a stub; no public developer API, SDK, or documentation surface was
-  found during enrichment (identity and domain-security artifacts only).
+  Amaze Commerce (creator storefronts and AI-powered product creation, at
+  amazecommerce.com), Spring (spri.ng, the creator storefront brand formerly
+  known as Teespring), Amaze Live (shoppable livestreams), and Amaze Media
+  (performance marketing and audience targeting for brands). The company reports
+  190K+ creators, 1.7B+ lifetime fan reach, and operations across 183 countries.
+  Surfaced originally as a portfolio company of Insight Partners. A public,
+  machine-readable API surface WAS found on the second enrichment pass: the
+  Spring Seller API, a Swagger 2.0 contract with 24 operations served live at
+  api.teespring.com (Spring's legacy API host), documented behind a Swagger UI at
+  https://api.teespring.com/docs. Amaze also publishes first-party Protobuf/gRPC
+  service contracts to npm under the @teespring scope.
 url: https://raw.githubusercontent.com/api-evangelist/famous/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -35,7 +41,7 @@ x-rebranded-to: amaze
 x-rebrand-note: famous.co returns 301 -> amaze.co; operating company is Amaze Holdings, Inc.
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-19'
+modified: '2026-08-13'
 tags:
 - Company
 - Creator Economy
@@ -44,7 +50,63 @@ tags:
 - Media
 - Ecommerce
 - Marketing
-apis: []
+- Print on Demand
+- Merchandise
+- Storefronts
+- Orders
+- Payouts
+apis:
+- name: Spring Seller API
+  description: >-
+    The Spring (formerly Teespring) Seller API — a Swagger 2.0 contract with 24
+    operations across three surfaces: `seller/v1/*` (the authenticated seller's
+    dashboard, campaigns, orders, payouts, promotions, volume discounts, and
+    buyer messaging), `v1/*` (public storefront reads — campaigns, categories,
+    recommenders, rush prices, trending search suggestions — plus the
+    authenticated user profile and saved addresses/cards), and `internal/v1/*`
+    (inbound Stripe dispute webhook receivers). Authentication is a
+    seller-scoped `access_token` minted by POST /v1/auth-tokens from an email,
+    password, and an `app_id` that Spring issues on request; the token expires
+    after 24 hours. Public storefront reads take an `app_id` query parameter
+    instead. The API is served on api.teespring.com, Spring's legacy API host,
+    and is operated by Amaze Holdings, Inc.
+  humanURL: https://api.teespring.com/docs
+  baseURL: https://api.teespring.com/
+  tags:
+  - creator-economy
+  - ecommerce
+  - print-on-demand
+  - merchandise
+  - campaigns
+  - orders
+  - payouts
+  - storefront
+  - seller-api
+  properties:
+  - type: OpenAPI
+    url: openapi/famous-spring-api-swagger.json
+  - type: Documentation
+    url: https://api.teespring.com/docs
+  - type: APIReference
+    url: https://api.teespring.com/docs
+  - type: GettingStarted
+    url: https://api.teespring.com/docs
+  - type: Authentication
+    url: authentication/famous-authentication.yml
+  - type: Conventions
+    url: conventions/famous-conventions.yml
+  - type: ErrorCatalog
+    url: errors/famous-problem-types.yml
+  - type: DataModel
+    url: data-model/famous-data-model.yml
+  - type: RateLimits
+    url: rate-limits/famous-rate-limits.yml
+  - type: Overlay
+    url: overlays/famous-spring-api-overlay.yaml
+  - type: Conformance
+    url: conformance/famous-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/famous-lifecycle.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -53,6 +115,46 @@ maintainers:
 common:
 - type: DomainSecurity
   url: security/famous-domain-security.yml
+- type: Authentication
+  url: authentication/famous-authentication.yml
+- type: Conventions
+  url: conventions/famous-conventions.yml
+- type: ErrorCatalog
+  url: errors/famous-problem-types.yml
+- type: DataModel
+  url: data-model/famous-data-model.yml
+- type: RateLimits
+  url: rate-limits/famous-rate-limits.yml
+- type: Conformance
+  url: conformance/famous-conformance.yml
+- type: Lifecycle
+  url: lifecycle/famous-lifecycle.yml
+- type: Documentation
+  url: https://api.teespring.com/docs
+- type: APIReference
+  url: https://api.teespring.com/docs
+- type: GettingStarted
+  url: https://api.teespring.com/docs
+- type: VulnerabilityDisclosure
+  url: security/famous-vulnerability-disclosure.yml
+- type: Security
+  url: https://spri.ng/about/security
+- type: Packages
+  url: packages/famous-packages.yml
+- type: Protobuf
+  url: grpc/famous-user-identity-service.proto
+- type: Protobuf
+  url: grpc/famous-subscriptions-subscriptions.proto
+- type: Protobuf
+  url: grpc/famous-onboarding-task_list_service.proto
+- type: gRPC
+  url: grpc/famous-grpc.yml
+- type: LLMsTxt
+  url: llms/famous-llms.txt
+- type: Plans
+  url: plans/famous-plans-pricing.yml
+- type: AgentSkill
+  url: skills/_index.yml
 - type: Website
   url: https://amaze.co/
 - type: About
@@ -61,6 +163,18 @@ common:
   url: https://blog.amaze.co/
 - type: Support
   url: https://amaze.co/contact
+- type: HelpCenter
+  url: https://kb.spri.ng/
+- type: GitHubOrganization
+  url: https://github.com/teespring
+- type: Pricing
+  url: https://amazecommerce.com/pricing
+- type: SignUp
+  url: https://app.amazecommerce.com/signup
+- type: Login
+  url: https://teespring.com/login
+- type: TermsOfService
+  url: https://www.amaze.co/policies/commerce/terms-of-service
 - type: PrivacyPolicy
   url: https://www.amaze.co/policies/corporate/privacy-policy
 - type: InvestorRelations
@@ -68,7 +182,7 @@ common:
 - type: Careers
   url: https://jobs.lever.co/amaze
 x-enrichment:
-  date: '2026-07-19'
-  status: backfilled
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 32
   pass: local-v1
-  note: backfilled from .gitignore signal + verified work evidence
