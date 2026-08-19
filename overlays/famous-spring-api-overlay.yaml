@@ -1,0 +1,126 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Spring Seller API
+  version: 1.0.0
+x-provenance:
+  generated: '2026-08-13'
+  method: generated
+  extends: openapi/famous-spring-api-swagger.json
+  source: >-
+    Facts observed by API Evangelist against the live API on 2026-08-13 and read from the docs page
+    at https://api.teespring.com/docs. This overlay is NEVER applied to the original spec; it
+    records what the published Swagger 2.0 document omits so a consumer can see the delta.
+  note: >-
+    Targets use the Swagger 2.0 document structure ($.info, $.paths...). Nothing here changes the
+    provider's behaviour — it annotates what the provider left undeclared.
+actions:
+- target: $.info
+  description: >-
+    The published document carries only `version: 0.0.1` in info — no title, description, contact,
+    licence or terms. Add the identity the Swagger UI page states in prose.
+  update:
+    title: Spring API
+    description: >-
+      The Spring (formerly Teespring) Seller API. Seller-scoped reads over campaigns, orders,
+      payouts, promotions and dashboard summaries, plus public storefront reads and inbound Stripe
+      dispute webhooks. Operated by Amaze Holdings, Inc.
+    x-operator: Amaze Holdings, Inc.
+    x-brand-history: Teespring -> Spring (spri.ng) -> operated by Amaze; API still served on the
+      original teespring.com domain.
+    x-docs: https://api.teespring.com/docs
+    x-api-evangelist-profile: https://apis.io/provider/famous
+- target: $
+  description: >-
+    The document declares no securityDefinitions at all, even though every seller operation
+    requires access_token and the public campaign read requires app_id. Declare them.
+  update:
+    securityDefinitions:
+      access_token:
+        type: apiKey
+        in: query
+        name: access_token
+        description: >-
+          Seller access token from POST /v1/auth-tokens. Expires after 24 hours. Requesting a new
+          one returns the CURRENT token rather than minting a new one.
+      app_id:
+        type: apiKey
+        in: query
+        name: app_id
+        description: Application identifier issued manually by Spring; there is no self-serve key page.
+- target: $.paths['/seller/v1/summary'].get.parameters[?(@.name=='period')]
+  description: >-
+    SPEC VIOLATION. `period` declares its `description` as a JSON ARRAY of the six accepted values
+    rather than a string — Swagger 2.0 requires `description` to be a string, and the values belong
+    in `enum`. Any strict parser rejects the document here; any lenient one loses the constraint.
+    Move the array into `enum` and give the parameter a real description.
+  update:
+    description: >-
+      Reporting window. Verified 2026-08-13 — an unaccepted value returns HTTP 404 with
+      '{"error":{"message":"Unsupported period. Valid periods include: today, yesterday, week,
+      month, seven_days, thirty_days"}}'.
+    enum: [today, yesterday, week, month, seven_days, thirty_days]
+    x-original-description-type: array (invalid per Swagger 2.0 — description MUST be a string)
+- target: $.paths['/seller/v1/orders'].get.parameters[?(@.name=='states')]
+  description: Promote the order states enumerated in the parameter description into a real enum.
+  update:
+    enum: [failed, cancelled_and_refunded, cancelled, initialized, placed, charged]
+    default: 'placed,charged'
+    x-format: comma-separated list
+- target: $.paths['/seller/v1/campaigns'].get.parameters[?(@.name=='states')]
+  description: Promote the campaign states enumerated in the parameter description into a real enum.
+  update:
+    enum: [deleted, draft, active, suspended, success, failed, archive, redirect, hidden]
+    x-format: comma-separated list
+- target: $.paths['/v1/campaigns/{slug}'].get.parameters[?(@.name=='slug')]
+  description: >-
+    `slug` is declared integer/int32 here but is documented as a string ("Unique identifier in the
+    campaign's url") on GET /seller/v1/campaigns. Flag the contradiction rather than silently
+    picking one — a generated client produces two incompatible signatures for one concept.
+  update:
+    x-type-conflict: >-
+      Declared type: integer(int32) on this path; described as a URL slug string on
+      /seller/v1/campaigns. Verify against a live response before generating a client.
+- target: $
+  description: Record the response headers the API actually emits, none of which the spec declares.
+  update:
+    x-response-headers:
+      x-request-id: uuid, emitted on every response
+      x-correlation-id: uuid, emitted on every response (Spring's own `correlation` Ruby gem)
+      x-runtime: server processing seconds
+      etag: weak ETag on cacheable public reads
+    x-rate-limit-headers: none — no X-RateLimit-*, RateLimit-* or Retry-After observed
+- target: $
+  description: >-
+    Record the two error envelopes the API returns. The document declares only success responses on
+    all 24 operations.
+  update:
+    x-error-envelopes:
+    - '{"error": "<string>"}'
+    - '{"error": {"message": "<string>"}}'
+    x-error-catalog: errors/famous-problem-types.yml
+    x-unknown-path-behaviour: >-
+      Unknown paths answer 301 (a Rails redirect), not 404 — a client must not follow redirects and
+      must assert content-type application/json before parsing.
+- target: $.paths['/seller/v1/messages/send'].post
+  description: >-
+    Flag the highest-consequence operation in the API. It sends real email to real buyers, takes
+    formData rather than JSON, and has no idempotency key.
+  update:
+    x-consequence: physical
+    x-human-in-the-loop: required
+    x-idempotent: false
+    x-idempotency-note: >-
+      No Idempotency-Key is supported. A retry after a network timeout can double-send to every
+      recipient. Call GET /seller/v1/messages/recipients first and record the send yourself.
+- target: $.paths['/internal/v1/stripe/dispute_created'].post
+  description: Mark the internal-tagged operations as not part of the developer surface.
+  update:
+    x-audience: internal
+    x-note: >-
+      Inbound webhook receiver for Stripe events. Present in the public document but not an
+      operation a developer calls.
+- target: $.paths['/internal/v1/stripe/dispute_closed'].post
+  description: Mark the internal-tagged operations as not part of the developer surface.
+  update:
+    x-audience: internal
+    x-note: Inbound webhook receiver for Stripe events.

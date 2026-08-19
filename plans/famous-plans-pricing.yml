@@ -1,0 +1,64 @@
+generated: '2026-08-13'
+method: searched
+source: https://amazecommerce.com/pricing
+api: Amaze Commerce (platform subscription — there is no separate API plan)
+plan_count: 3
+currency: USD
+billing_period: monthly
+api_pricing_note: >-
+  Spring publishes NO pricing for the Spring Seller API itself. Access is gated on an `app_id`
+  issued by Spring on request (see authentication/famous-authentication.yml), with no published
+  price, quota, or tier attached. The three plans below are the Amaze Commerce PLATFORM
+  subscription — what a creator pays to use the product the API reads from — not an API plan. No
+  page on api.teespring.com, spri.ng, amazecommerce.com or amaze.co attaches a price to API access.
+plans:
+- name: Free
+  price: 0
+  currency: USD
+  period: month
+  included:
+  - AI image generation and editing
+  - AI brand analysis
+  - AI social and trend analysis
+  - 1 GB file storage
+  - Product launch and storefront
+  limits:
+    file_storage: 1 GB
+  overage: not published
+  status: available
+- name: Basic
+  price: 9.99
+  currency: USD
+  period: month
+  included:
+  - Double the usage allowances of the Free tier
+  - Same AI tools as Free
+  - 5 GB file storage
+  limits:
+    file_storage: 5 GB
+    usage_allowance: 2x Free
+  overage: not published
+  status: available
+- name: Pro
+  price: 19.99
+  currency: USD
+  period: month
+  included:
+  - Quadruple the usage allowances of the Free tier
+  - Same AI capabilities as Free
+  - 20 GB file storage
+  limits:
+    file_storage: 20 GB
+    usage_allowance: 4x Free
+  overage: not published
+  status: coming-soon
+  status_source: labelled "Coming Soon" on https://amazecommerce.com/pricing as of 2026-08-13
+all_tiers_include:
+- AI-powered design generation and editing
+- Audience and brand analytics
+- Product creation infrastructure
+- Integrated production and fulfilment
+- Storefront building
+- No inventory or upfront capital required
+transaction_fees: not published on the pricing page
+enterprise_tier: none published — there is no "contact sales" tier on this page

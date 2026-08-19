@@ -1,0 +1,85 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/famous-spring-api-swagger.json, https://api.teespring.com/docs,
+  https://spri.ng/about/security, and live probes of api.teespring.com (2026-08-13)
+api: Spring Seller API
+standards:
+- id: openapi
+  conforms: partial
+  version: Swagger 2.0
+  evidence: >-
+    https://api.teespring.com/swagger_doc/ returns a Swagger 2.0 document with 24 operations, every
+    one carrying an operationId and a tag. It is 8 years behind current OpenAPI (3.1/3.2), it
+    declares an empty `definitions` block, no response schemas, and no securityDefinitions. It also
+    contains at least one hard SCHEMA VIOLATION: the `period` parameter on GET /seller/v1/summary
+    declares `description` as a JSON ARRAY of its six accepted values, where Swagger 2.0 requires a
+    string and the values belong in `enum`. A strict validator rejects the document.
+- id: oauth2
+  conforms: false
+  evidence: >-
+    POST /v1/auth-tokens exchanges an email + password + app_id for a token and its response is
+    described as "Logs in a user and returns an OAuth token", but it is not an OAuth 2.0 flow: no
+    grant_type, no authorization endpoint, no scopes, no refresh token, no token_type, and no
+    /.well-known/oauth-authorization-server (probed 404/301 on every host).
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration returned 404 or 301 on every Amaze and Spring host.
+- id: rfc9457
+  conforms: false
+  evidence: >-
+    Errors are application/json with a bare `error` member (string on some paths, object with
+    `message` on others). No application/problem+json, no type/title/status/detail/instance.
+- id: rfc8594
+  conforms: false
+  evidence: No Deprecation or Sunset response header was observed and no deprecation policy exists.
+- id: rfc9110-conditional-requests
+  conforms: partial
+  evidence: >-
+    Public storefront reads emit a weak ETag and `cache-control: public, max-age=30`
+    (observed on GET /v1/search-suggestions/trending), so If-None-Match is possible — but nothing
+    documents it and seller reads send `cache-control: no-cache`.
+- id: rfc6749-bearer-header
+  conforms: false
+  evidence: >-
+    Credentials travel in the URL query string (`?access_token=`), not an Authorization header.
+- id: idempotency
+  conforms: false
+  evidence: No idempotency key on any of the write operations. See conventions/famous-conventions.yml.
+- id: pagination
+  conforms: partial
+  evidence: >-
+    Consistent page / per_page query parameters across the six collection endpoints, but no
+    documented defaults, no documented maximum, no cursor option, and no documented response
+    envelope for the page metadata.
+- id: json-api
+  conforms: false
+  evidence: Responses are ad-hoc JSON; no JSON:API media type or document structure.
+- id: grpc
+  conforms: true
+  evidence: >-
+    Amaze publishes proto3 service definitions for three internal services to npm under the
+    @teespring scope, saved verbatim in grpc/. These are real gRPC contracts (service blocks with
+    rpc methods), including a buf.yaml in the user-identity package — but they describe internal
+    services with no published endpoint, not the public API.
+- id: webhooks-outbound
+  conforms: false
+  evidence: >-
+    The only webhook surface in the spec is INBOUND — /internal/v1/stripe/dispute_created and
+    /internal/v1/stripe/dispute_closed are receivers for Stripe's events. Spring publishes no
+    outbound webhooks or event subscriptions for developers, so no AsyncAPI or Webhooks pointer is
+    wired.
+compliance_programs:
+  published_certifications: []
+  note: >-
+    No SOC 2, ISO 27001, PCI DSS, HIPAA or FedRAMP claim was found on
+    https://spri.ng/about/security, https://amaze.co/, https://amazecommerce.com/ or the Amaze
+    policy pages. No trust center exists. Consequently NO `type: Compliance` and NO
+    `type: TrustCenter` pointer is wired in apis.yml.
+  vulnerability_disclosure: >-
+    A real VDP does exist (security.team@spri.ng) — see
+    security/famous-vulnerability-disclosure.yml — and is wired as `type: Security`.
+transport_security:
+  tls: TLSv1.3
+  hsts: true
+  see_also: security/famous-domain-security.yml

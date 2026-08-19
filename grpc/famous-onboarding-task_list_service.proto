@@ -1,0 +1,81 @@
+syntax="proto3";
+
+package task_list_service.v1;
+
+service TasklistService {
+    rpc GetTasklist (GetTasklistRequest) returns (GetTasklistResponse);
+    rpc GetTaskListById (GetTasklistByIdRequest) returns (GetTasklistByIdResponse);
+    rpc CreateTasklist (CreateTasklistRequest) returns (CreateTasklistResponse);
+    rpc UpdateTasklist (UpdateTasklistRequest) returns (UpdateTasklistResponse);
+    rpc RemoveTasklist (RemoveTasklistRequest) returns (RemoveTasklistResponse);
+}
+
+message TasklistItems {
+    string title = 1;
+    string context = 2;
+}
+
+message TaskListRequest {
+    string id = 1;
+    repeated string items = 2;
+    string name = 6;
+}
+
+message TaskListSuccsessResponse {
+    string id = 1;
+    repeated string items = 2;
+    string last_updated = 3;
+    string created_at = 4;
+    string deleted_at = 5;
+    string name = 6;
+}
+
+message GetTasklistRequest {
+    TaskListRequest tasklist = 1;
+}
+
+message GetTasklistByIdRequest {
+    TaskListRequest tasklist = 1;
+
+}
+
+message RemoveTasklistRequest {
+    TaskListRequest tasklist = 1;
+
+}
+
+message CreateTasklistRequest {
+    TaskListRequest tasklist = 1;
+}
+
+message UpdateTasklistRequest {
+    TaskListRequest tasklist = 1;
+}
+
+
+message GetTasklistResponse {
+    bool success = 1;
+    TaskListSuccsessResponse res = 2;
+}
+
+message GetTasklistByIdResponse {
+    bool success = 1;
+    TaskListSuccsessResponse res = 2;
+}
+
+message RemoveTasklistResponse {
+    bool success = 1;
+    TaskListSuccsessResponse res = 2;
+}
+
+message CreateTasklistResponse {
+    bool success = 1;
+    TaskListSuccsessResponse res = 2;
+}
+
+message UpdateTasklistResponse {
+    bool success = 1;
+    TaskListSuccsessResponse res = 2;
+}
+
+

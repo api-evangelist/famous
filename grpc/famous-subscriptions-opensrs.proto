@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package subscriptionscoordinator.v1.opensrs.v1;
+
+service OpenSrsService {
+  rpc RegisterDomain(RegisterDomainRequest) returns (RegisterDomainResponse) {};
+  rpc SearchForDomain(SearchForDomainRequest) returns (SearchForDomainResponse) {};
+  rpc GetRegistrantVerificationStatus(GetRegistrantVerificationStatusRequest)returns (GetRegistrantVerificationStatusResponse) {};
+}
+
+message RegisterDomainRequest {
+  string domain = 1;
+  string payment_intent = 2;
+  string user_id = 3;
+  string store_id = 4;
+  string store_name = 5;
+}
+
+message RegisterDomainResponse {
+  bool success = 1;
+  string error_message = 2;
+}
+
+message SearchForDomainRequest {
+  int32 offset = 1;
+  string query = 2;
+}
+
+message DomainSearchObject {
+  bool available = 1;
+  string domain = 2;
+  string price = 3;
+}
+
+message SearchForDomainErrorResponse {
+  string error = 2;
+}
+
+message SearchForDomainSuccessResponse {
+  bool available = 1;
+  string domain = 2;
+  string price = 3;
+  repeated SearchForDomainSuccessResponse suggestions = 4;
+}
+
+message SearchForDomainResponse {
+  bool success = 1;
+  oneof response {
+    SearchForDomainErrorResponse error = 2;
+    SearchForDomainSuccessResponse res = 3;
+  }
+}
+
+message GetRegistrantVerificationStatusRequest {
+  string domain = 1;
+}
+
+
+message GetRegistrantVerificationStatusErrorResponse {
+  string error = 1;
+}
+
+message GetRegistrantVerificationStatusSuccessResponse {
+  string verification_status = 1;
+  string verification_deadline = 2;
+  int32 email_bounced = 3;
+  int32 days_to_suspend = 4;
+}
+
+message GetRegistrantVerificationStatusResponse {
+  bool success = 1;
+  oneof response {
+    GetRegistrantVerificationStatusErrorResponse error = 2;
+    GetRegistrantVerificationStatusSuccessResponse res = 3;
+  }
+}

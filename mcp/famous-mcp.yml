@@ -1,0 +1,140 @@
+generated: '2026-08-13'
+method: derived
+status: candidate
+source: openapi/famous-spring-api-swagger.json
+published_server: null
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: derived
+  checked: '2026-08-13'
+searched:
+  note: >-
+    No Amaze- or Spring-operated MCP server exists. This file is a CANDIDATE tool shape derived
+    from the published Swagger 2.0 document — it is NOT a server Amaze runs, and it carries NO
+    `type: MCPServer` pointer in apis.yml. Wiring one would credit Amaze with an agent surface it
+    does not operate.
+  dns_probes:
+  - host: mcp.spri.ng
+    result: NXDOMAIN
+  - host: mcp.amaze.co
+    result: NXDOMAIN
+  - host: mcp.amazecommerce.com
+    result: NXDOMAIN
+  - host: mcp.teespring.com
+    result: NXDOMAIN
+  http_probes:
+  - url: https://amaze.co/.well-known/ai-plugin.json
+    status: 404
+  - url: https://amazecommerce.com/.well-known/ai-plugin.json
+    status: 404
+  - url: https://api.teespring.com/.well-known/ai-plugin.json
+    status: 301
+  - url: https://amaze.co/llms.txt
+    status: 404
+  - url: https://amazecommerce.com/llms.txt
+    status: 404
+  - url: https://spri.ng/llms.txt
+    status: 404
+  registries_checked:
+  - registry: npm
+    query: registry.npmjs.org search for teespring / amaze / amaze-commerce
+    result: >-
+      4 first-party packages, none of them an MCP server (three gRPC proto contracts and a React UI
+      library — see packages/famous-packages.yml).
+  - registry: PyPI
+    result: no first-party package
+  registry_result: no first-party Amaze or Spring MCP package or hosted endpoint published anywhere
+server:
+  name: famous
+  transport: null
+  url: null
+candidate_tools:
+  note: >-
+    A starter tool set, one tool per real operationId in
+    openapi/famous-spring-api-swagger.json. Each tool's input schema IS that operation's declared
+    parameters — nothing is invented. Operations tagged `internal` are excluded: they are inbound
+    Stripe webhook receivers, not developer operations.
+  tools:
+  - name: get_seller_dashboard
+    description: All the information used to populate the Seller Dashboard.
+    source_operation: openapi/famous-spring-api-swagger.json#getSellerV1Dashboard
+    consequence: read
+  - name: get_seller_summary
+    description: Seller summary for a reporting period (today, yesterday, week, month, seven_days, thirty_days).
+    source_operation: openapi/famous-spring-api-swagger.json#getSellerV1Summary
+    consequence: read
+  - name: list_campaigns
+    description: All campaign roots for the authenticated seller, filterable by state and searchable by title.
+    source_operation: openapi/famous-spring-api-swagger.json#getSellerV1Campaigns
+    consequence: read
+  - name: get_campaign_root
+    description: A single campaign root and all of its associated campaign runs, by slug.
+    source_operation: openapi/famous-spring-api-swagger.json#getSellerV1CampaignsSlug
+    consequence: read
+  - name: list_orders
+    description: Lifetime orders and line items for the authenticated seller, filterable by state, campaign and date range.
+    source_operation: openapi/famous-spring-api-swagger.json#getSellerV1Orders
+    consequence: read
+  - name: get_orders_for_buyer
+    description: All orders placed by the buyer behind a given order lookup number.
+    source_operation: openapi/famous-spring-api-swagger.json#getSellerV1OrdersForBuyerFromOrderLookupNumber
+    consequence: read
+  - name: list_payouts
+    description: Seller payout history, including requests and actual payouts.
+    source_operation: openapi/famous-spring-api-swagger.json#getSellerV1Payouts
+    consequence: read
+  - name: list_promotions
+    description: The seller's promo codes.
+    source_operation: openapi/famous-spring-api-swagger.json#getSellerV1Promotions
+    consequence: read
+  - name: get_volume_discount
+    description: Information about volume discounts available to the seller.
+    source_operation: openapi/famous-spring-api-swagger.json#getSellerV1DashboardVolumeDiscount
+    consequence: read
+  - name: get_message_variables
+    description: The template variables available in a buyer message.
+    source_operation: openapi/famous-spring-api-swagger.json#getSellerV1MessagesVariables
+    consequence: read
+  - name: preview_message_recipients
+    description: Who a message would go to, before sending it.
+    source_operation: openapi/famous-spring-api-swagger.json#getSellerV1MessagesRecipients
+    consequence: read
+  - name: send_buyer_message
+    description: Send a templated email message to buyers.
+    source_operation: openapi/famous-spring-api-swagger.json#postSellerV1MessagesSend
+    consequence: physical
+    human_in_the_loop: required
+    note: >-
+      Sends real email to real customers and has no idempotency key — a retry can double-send.
+  - name: get_public_campaign
+    description: Public storefront read of one campaign by slug (requires app_id, not a seller token).
+    source_operation: openapi/famous-spring-api-swagger.json#getV1CampaignsSlug
+    consequence: read
+  - name: list_category_campaigns
+    description: All campaigns within a storefront category.
+    source_operation: openapi/famous-spring-api-swagger.json#getV1CategoriesSlugCampaigns
+    consequence: read
+  - name: get_trending_searches
+    description: Trending search suggestions. The only fully anonymous operation on the API.
+    source_operation: openapi/famous-spring-api-swagger.json#getV1SearchSuggestionsTrending
+    consequence: read
+  - name: get_me
+    description: The currently authenticated user.
+    source_operation: openapi/famous-spring-api-swagger.json#getV1UsersMe
+    consequence: read
+blockers_for_a_real_server:
+- No self-serve credential issuance. The app_id must be requested from Spring by a human ("Obtain
+  an app_id from Teespring"), so an MCP client has no anonymous path to a token.
+- The token exchange requires the account EMAIL AND PASSWORD, so an MCP server would have to hold a
+  seller's primary login credential rather than a revocable, scoped API key.
+- Tokens expire every 24 hours with no refresh token, so a long-lived server must re-submit the
+  password on a daily cycle.
+- No scopes. A token is all-or-nothing over the seller's account, including payouts and buyer PII.
+- No idempotency key on the one write operation that has real-world consequences (buyer email).
+- No response schemas anywhere in the spec, so tool OUTPUT shapes cannot be declared without an
+  authenticated capture.
+see_also: openapi/famous-spring-api-swagger.json

@@ -1,0 +1,732 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Collection",
+    "version": "0.0.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "internal",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "postInternalV1StripeDisputeClosed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/internal/v1/stripe/dispute_closed"
+          },
+          "docs": "Register that a dispute was closed."
+        },
+        {
+          "info": {
+            "name": "postInternalV1StripeDisputeCreated",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/internal/v1/stripe/dispute_created"
+          },
+          "docs": "Register that a new dispute was created."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "seller",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getSellerV1MessagesVariables",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/seller/v1/messages/variables"
+          },
+          "docs": "Message template variables"
+        },
+        {
+          "info": {
+            "name": "postSellerV1MessagesSend",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/seller/v1/messages/send"
+          },
+          "docs": "Send a message to buyer(s)"
+        },
+        {
+          "info": {
+            "name": "getSellerV1MessagesRecipients",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/seller/v1/messages/recipients",
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "authentication token obtained from the V1 Auth API"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "lookup_number",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get information about sending a message to buyer(s)"
+        },
+        {
+          "info": {
+            "name": "getSellerV1Summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/seller/v1/summary",
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "authentication token obtained from the V1 Auth API"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query",
+                "description": [
+                  "today",
+                  "yesterday",
+                  "week",
+                  "month",
+                  "seven_days",
+                  "thirty_days"
+                ]
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "campaign root slug"
+              },
+              {
+                "name": "flush_cache",
+                "value": "",
+                "type": "query",
+                "description": "Whether or not to flush the cache. Defaults to false."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Promo codes the seller has defined",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/seller/v1/promotions",
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "authentication token obtained from the V1 Auth API"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "page number to view"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "number of records per page"
+              }
+            ]
+          },
+          "docs": "\n\nSeller's promo codes."
+        },
+        {
+          "info": {
+            "name": "Payouts from Teespring",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/seller/v1/payouts",
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "authentication token obtained from the V1 Auth API"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "page number to view"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "number of records per page"
+              }
+            ]
+          },
+          "docs": "\n\nSeller's payout history, including requests and actual payouts."
+        },
+        {
+          "info": {
+            "name": "getSellerV1DashboardVolumeDiscount",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/seller/v1/dashboard/volume_discount",
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "authentication token obtained from the V1 Auth API"
+              }
+            ]
+          },
+          "docs": "Information about volume discounts"
+        },
+        {
+          "info": {
+            "name": "All the information shown on the seller dashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/seller/v1/dashboard",
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "authentication token obtained from the V1 Auth API"
+              }
+            ]
+          },
+          "docs": "\n\nAll the information used to populate the Seller Dashboard, pulled from exactly the same source."
+        },
+        {
+          "info": {
+            "name": "getSellerV1OrdersForBuyerFromOrderLookupNumber",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/seller/v1/orders/for_buyer_from_order/:lookup_number",
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "authentication token obtained from the V1 Auth API"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "page number to view"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "number of records per page"
+              },
+              {
+                "name": "states",
+                "value": "",
+                "type": "query",
+                "description": "comma-separated list of order states (failed, cancelled_and_refunded, cancelled, initialized, placed, charged) (default: placed,charged)"
+              },
+              {
+                "name": "lookup_number",
+                "value": "",
+                "type": "path",
+                "description": "order lookup number"
+              }
+            ]
+          },
+          "docs": "Orders placed by a single user"
+        },
+        {
+          "info": {
+            "name": "Orders placed on campaigns",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/seller/v1/orders",
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "authentication token obtained from the V1 Auth API"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "page number to view"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "number of records per page"
+              },
+              {
+                "name": "states",
+                "value": "",
+                "type": "query",
+                "description": "comma-separated list of order states (failed, cancelled_and_refunded, cancelled, initialized, placed, charged) (default: placed,charged)"
+              },
+              {
+                "name": "campaign_ids",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of campaign ids. Only orders belonging to the provided campaigns will be returned. Default: *"
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "A date in the format YYYY-MM-DD. Only return orders on or after this date."
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "A date in the format YYYY-MM-DD. Only return orders on or before this date."
+              }
+            ]
+          },
+          "docs": "\n\nAll lifetime orders and line items for the authenticated seller, including information about the purchase and buyer."
+        },
+        {
+          "info": {
+            "name": "Specific campaign root, named by the \"slug\" (unique identifier in the url) e.g. freefishco",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/seller/v1/campaigns/:slug",
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "authentication token obtained from the V1 Auth API"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "unique identifier in the campaign's url"
+              },
+              {
+                "name": "history",
+                "value": "",
+                "type": "query",
+                "description": "include previous runs"
+              },
+              {
+                "name": "getvars",
+                "value": "",
+                "type": "query",
+                "description": "include GET variables data"
+              }
+            ]
+          },
+          "docs": "\n\nA single campaign root and all of its associated campaigns, given by the \"slug\" (the part of the URL that is unique to your campaign)."
+        },
+        {
+          "info": {
+            "name": "All campaign roots",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/seller/v1/campaigns",
+            "params": [
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "authentication token obtained from the V1 Auth API"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "page number to view"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "number of records per page"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "search term to filter only records with a matching title or description"
+              },
+              {
+                "name": "states",
+                "value": "",
+                "type": "query",
+                "description": "comma-separated list of campaign states (deleted, draft, active, suspended, success, failed, archive, redirect, hidden)"
+              },
+              {
+                "name": "sort_by_sales",
+                "value": "",
+                "type": "query",
+                "description": "sort by sales in high to low (desc) or low to high (asc)"
+              },
+              {
+                "name": "sort_by_profit",
+                "value": "",
+                "type": "query",
+                "description": "sort by profit in high to low (desc) or low to high (asc)"
+              },
+              {
+                "name": "recency",
+                "value": "",
+                "type": "query",
+                "description": "sort by most/least recent campaigns"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "Unique identifier in the campaign's url. Providing this will cause the api to only return one campaign."
+              },
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "query",
+                "description": "ID of one of the campaign root's campaigns. Providing this will cause the api to only return one campaign."
+              },
+              {
+                "name": "history",
+                "value": "",
+                "type": "query",
+                "description": "Include previous runs (only if specifying either slug or campaign_id)"
+              },
+              {
+                "name": "getvars",
+                "value": "",
+                "type": "query",
+                "description": "Include GET variables data (only if specifying either slug or campaign_id)"
+              }
+            ]
+          },
+          "docs": "\n\nAll the campaign roots for the authenticated user. Campaign roots are groupings of individual campaign \"runs\" for a single design. When you create a campaign in the Composer, you are actually creating a campaign root and an attached campaign. Every time a campaign is relaunched, an additional campaign is added to that campaign root. So every design has a campaign root, and one more campaigns."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "v1",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getV1UsersMeSavedAddresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/users/me/saved-addresses",
+            "params": [
+              {
+                "name": "app_id",
+                "value": "",
+                "type": "query",
+                "description": "app ID (provided by Teespring)"
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "authentication token obtained from the V1 Auth API"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getV1UsersMeSavedCards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/users/me/saved-cards",
+            "params": [
+              {
+                "name": "app_id",
+                "value": "",
+                "type": "query",
+                "description": "app ID (provided by Teespring)"
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "authentication token obtained from the V1 Auth API"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getV1UsersMe",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/users/me",
+            "params": [
+              {
+                "name": "app_id",
+                "value": "",
+                "type": "query",
+                "description": "app ID (provided by Teespring)"
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "authentication token obtained from the V1 Auth API"
+              }
+            ]
+          },
+          "docs": "Returns the currently authenticated user"
+        },
+        {
+          "info": {
+            "name": "getV1SearchSuggestionsTrending",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/search-suggestions/trending"
+          },
+          "docs": "Get trending search results"
+        },
+        {
+          "info": {
+            "name": "getV1RushPricesCampaignRegionName",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/rush-prices/:campaign_region_name",
+            "params": [
+              {
+                "name": "country_id",
+                "value": "",
+                "type": "query",
+                "description": "Country ID, for filtering"
+              },
+              {
+                "name": "campaign_region_name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "GET active RushPrice offers in CampaignRegion"
+        },
+        {
+          "info": {
+            "name": "Paginated collection of campaigns produced by a recommender",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/recommenders/:recommender_id/campaigns",
+            "params": [
+              {
+                "name": "app_id",
+                "value": "",
+                "type": "query",
+                "description": "app ID (provided by Teespring)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "page number to view"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "number of records per page"
+              },
+              {
+                "name": "recommender_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "\n\nFetches a paginated collection of campaigns produced by a recommender."
+        },
+        {
+          "info": {
+            "name": "All campaigns in a category",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/categories/:slug/campaigns",
+            "params": [
+              {
+                "name": "app_id",
+                "value": "",
+                "type": "query",
+                "description": "app ID (provided by Teespring)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "page number to view"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "number of records per page"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "\n\nFetches all the campaigns within the specified category."
+        },
+        {
+          "info": {
+            "name": "getV1CategoriesSlug",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/categories/:slug",
+            "params": [
+              {
+                "name": "app_id",
+                "value": "",
+                "type": "query",
+                "description": "app ID (provided by Teespring)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "page number to view"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "number of records per page"
+              },
+              {
+                "name": "include_campaigns",
+                "value": "",
+                "type": "query",
+                "description": "Also include active campaigns"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get category metdata"
+        },
+        {
+          "info": {
+            "name": "getV1CampaignsSlug",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/campaigns/:slug",
+            "params": [
+              {
+                "name": "app_id",
+                "value": "",
+                "type": "query",
+                "description": "app ID (provided by Teespring)"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "The currency to use for pricing"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Logs in a user and returns an OAuth token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/auth-tokens"
+          },
+          "docs": "\n\nMake the below request using your Teespring email and password, along with the `app_id` provided to you by Teespring. Copy the access token from the response and include it as the access_token url parameter for all subsequent requests. The token will expire after 24 hours and require a new request. Never share your access token with anyone. It will allow them to access your Teespring data until it expires."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

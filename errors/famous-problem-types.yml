@@ -1,0 +1,77 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/famous-spring-api-swagger.json + live probes of https://api.teespring.com (2026-08-13)
+api: Spring Seller API
+format: vendor-json
+rfc9457: false
+rfc9457_note: >-
+  The API does NOT emit application/problem+json. Errors come back as application/json with a
+  single top-level `error` key. No `type`, `title`, `status`, `detail` or `instance` member is
+  present, and no problem-type URIs are published.
+spec_coverage:
+  note: >-
+    The published Swagger 2.0 document declares ONLY success responses — 200 on every GET, 201 on
+    POST /v1/auth-tokens and the two internal Stripe webhook receivers. Not one 4xx or 5xx response
+    is documented across all 24 operations, so this catalog could not be derived from the spec's
+    response objects. Everything below was OBSERVED on live unauthenticated calls; the envelopes
+    are real, the coverage is partial by construction.
+  documented_error_responses: 0
+  documented_success_responses: 24
+envelopes:
+- shape: '{"error": "<string>"}'
+  example: '{"error":"access_token is missing, period is missing"}'
+  observed_on:
+    url: https://api.teespring.com/seller/v1/summary
+    status: 400
+- shape: '{"error": {"message": "<string>"}}'
+  example: '{"error":{"message":"app_id is missing"}}'
+  observed_on:
+    url: https://api.teespring.com/v1/campaigns/12345
+    status: 400
+inconsistency: >-
+  The two envelopes are not interchangeable — `error` is a STRING on some paths and an OBJECT with
+  a `message` member on others, on the same host and the same API version. A client cannot read
+  `error.message` unconditionally, and the spec documents neither shape.
+problem_types:
+- status: 400
+  code: missing_parameter
+  title: Required parameter missing
+  detail_examples:
+  - 'access_token is missing, period is missing'
+  - 'app_id is missing'
+  remediation: >-
+    Supply every parameter the operation declares `required: true` in
+    openapi/famous-spring-api-swagger.json. Seller operations need `access_token`; public
+    storefront reads need `app_id`; /seller/v1/summary additionally needs `period`.
+  observed: true
+  method: probed
+- status: 404
+  code: invalid_enum_value
+  title: Parameter value outside the accepted set
+  detail_examples:
+  - 'Unsupported period. Valid periods include: today, yesterday, week, month, seven_days, thirty_days'
+  remediation: >-
+    Use one of the enumerated values. Note the status code — the API answers an INVALID ENUM VALUE
+    with 404, not 400 or 422, so a client cannot treat 404 as "resource does not exist".
+  observed: true
+  method: probed
+  note: >-
+    Observed on GET /seller/v1/summary?access_token=<invalid>&period=all. The enum for `period` is
+    published in this error string and NOWHERE in the spec — the parameter is declared as a bare
+    string with no enum.
+- status: 301
+  code: unknown_path_redirect
+  title: Unknown paths redirect instead of 404
+  remediation: >-
+    GET https://api.teespring.com/v1/nonexistent-path-xyz answers 301 rather than 404. A client
+    following redirects will land on an HTML page and receive a 200 with a non-JSON body. Disable
+    redirect-following, or assert `content-type: application/json` before parsing.
+  observed: true
+  method: probed
+gaps:
+- No error reference page exists. api.teespring.com/docs documents authentication steps only; the
+  Spring knowledge base (kb.spri.ng) has no developer section at all.
+- No machine-readable error codes. Every error is a free-text English `message`; there is no stable
+  symbolic code a client can branch on without string matching.
+- Authentication failure is not distinguishable from validation failure by status alone — a missing
+  token, a missing app_id and a bad enum all return 4xx with the same envelope family.

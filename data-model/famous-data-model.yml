@@ -1,0 +1,142 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/famous-spring-api-swagger.json (paths, path parameters and parameter descriptions)
+api: Spring Seller API
+derivation_note: >-
+  The published Swagger 2.0 document declares an EMPTY `definitions` block and no response schemas,
+  so this graph could not be derived from $ref links. It is derived instead from the path
+  hierarchy, the path/query parameter names, and the operation descriptions — which are unusually
+  explicit about the campaign-root model. Field-level shapes are therefore unknown; entities and
+  relationships below are only what the spec itself states.
+entities:
+- name: Seller
+  description: The authenticated Spring account. Everything under /seller/v1 is scoped to it.
+  identified_by: access_token (no seller id appears in any path)
+  operations: [getSellerV1Summary, getSellerV1Dashboard]
+- name: CampaignRoot
+  description: >-
+    A grouping of individual campaign "runs" for a single design. Quoted from the spec: "Campaign
+    roots are groupings of individual campaign runs for a single design. When you create a campaign
+    in the Composer, you are actually creating a campaign root and an attached campaign. Every time
+    a campaign is relaunched, an additional campaign is added to that campaign root. So every
+    design has a campaign root, and one more campaigns."
+  identified_by: slug
+  operations: [getSellerV1Campaigns, getSellerV1CampaignsSlug]
+- name: Campaign
+  description: One launched run of a design, with a state and a storefront page.
+  identified_by: slug (string on the seller surface, int32 on GET /v1/campaigns/{slug})
+  states: [deleted, draft, active, suspended, success, failed, archive, redirect, hidden]
+  states_source: parameter description on `states` (GET /seller/v1/campaigns) — prose, not an enum
+  operations: [getV1CampaignsSlug, getV1CategoriesSlugCampaigns, getV1RecommendersRecommenderIdCampaigns]
+- name: Order
+  description: A buyer purchase against a campaign, with line items and buyer information.
+  identified_by: lookup_number
+  states: [failed, cancelled_and_refunded, cancelled, initialized, placed, charged]
+  states_source: parameter description on `states` (GET /seller/v1/orders) — prose, not an enum
+  operations: [getSellerV1Orders, getSellerV1OrdersForBuyerFromOrderLookupNumber]
+- name: Payout
+  description: Seller payout history, including requests and actual payouts.
+  operations: [getSellerV1Payouts]
+- name: Promotion
+  description: A seller's promo codes.
+  operations: [getSellerV1Promotions]
+- name: VolumeDiscount
+  description: Volume-discount tiers shown on the seller dashboard.
+  operations: [getSellerV1DashboardVolumeDiscount]
+- name: Message
+  description: A templated email a seller sends to buyers, with substitutable template variables.
+  operations: [getSellerV1MessagesVariables, getSellerV1MessagesRecipients, postSellerV1MessagesSend]
+- name: User
+  description: The currently authenticated end user (buyer-side identity), with saved addresses and cards.
+  operations: [getV1UsersMe, getV1UsersMeSavedAddresses, getV1UsersMeSavedCards]
+- name: Category
+  description: A storefront category with metadata and a campaign collection.
+  identified_by: slug
+  operations: [getV1CategoriesSlug, getV1CategoriesSlugCampaigns]
+- name: Recommender
+  description: A recommendation engine that produces a paginated campaign collection.
+  identified_by: recommender_id
+  operations: [getV1RecommendersRecommenderIdCampaigns]
+- name: RushPrice
+  description: Active rush-shipping price offers within a campaign region.
+  identified_by: campaign_region_name
+  operations: [getV1RushPricesCampaignRegionName]
+- name: AuthToken
+  description: A 24-hour seller access token minted from app_id + email + password.
+  operations: [postV1AuthTokens]
+- name: StripeDispute
+  description: >-
+    A payment dispute, delivered INBOUND from Stripe to /internal/v1/stripe/*. Not a resource a
+    developer reads — a webhook payload Spring receives.
+  operations: [postInternalV1StripeDisputeCreated, postInternalV1StripeDisputeClosed]
+relationships:
+- from: Seller
+  to: CampaignRoot
+  type: has_many
+  via: implicit (access_token scope)
+  evidence: 'GET /seller/v1/campaigns — "All the campaign roots for the authenticated user."'
+- from: CampaignRoot
+  to: Campaign
+  type: has_many
+  via: relaunch
+  evidence: 'GET /seller/v1/campaigns/{slug} — "A single campaign root and all of its associated campaigns."'
+- from: Seller
+  to: Order
+  type: has_many
+  via: implicit (access_token scope)
+  evidence: 'GET /seller/v1/orders — "All lifetime orders and line items for the authenticated seller."'
+- from: Order
+  to: Campaign
+  type: belongs_to
+  via: campaign_ids
+  evidence: 'campaign_ids query parameter on GET /seller/v1/orders filters orders by campaign.'
+- from: Order
+  to: Buyer
+  type: belongs_to
+  via: lookup_number
+  evidence: 'GET /seller/v1/orders/for_buyer_from_order/{lookup_number} — "Orders placed by a single user."'
+- from: Category
+  to: Campaign
+  type: has_many
+  via: slug
+  evidence: 'GET /v1/categories/{slug}/campaigns — "Fetches all the campaigns within the specified category."'
+- from: Recommender
+  to: Campaign
+  type: has_many
+  via: recommender_id
+  evidence: 'GET /v1/recommenders/{recommender_id}/campaigns.'
+- from: User
+  to: SavedAddress
+  type: has_many
+  via: /v1/users/me/saved-addresses
+- from: User
+  to: SavedCard
+  type: has_many
+  via: /v1/users/me/saved-cards
+- from: Seller
+  to: Payout
+  type: has_many
+  via: implicit (access_token scope)
+- from: Seller
+  to: Promotion
+  type: has_many
+  via: implicit (access_token scope)
+id_conventions:
+  slug:
+    used_by: [CampaignRoot, Campaign, Category]
+    note: >-
+      Type-inconsistent across the surface. `slug` is a STRING query parameter on GET
+      /seller/v1/campaigns ("Unique identifier in the campaign's url") but is declared
+      `type: integer, format: int32` as the path parameter on GET /v1/campaigns/{slug}. A generated
+      client will produce two incompatible signatures for the same concept.
+  lookup_number:
+    used_by: [Order]
+  recommender_id:
+    used_by: [Recommender]
+  prefixed_ids: none published
+gaps:
+- No object reference page exists, so field names, types, nullability and id formats are unknown
+  without an authenticated call. `definitions` is empty and no operation declares a response schema.
+- The gRPC services Amaze publishes to npm (see grpc/) describe a DIFFERENT, newer data core —
+  user identity, onboarding task lists, subscriptions, custom domains — that has no overlap with
+  the Seller API entities above. The two surfaces are not projections of the same model.

@@ -1,0 +1,87 @@
+generated: '2026-08-13'
+method: searched
+source: https://api.teespring.com/docs
+docs: https://api.teespring.com/docs
+note: >-
+  The published Swagger 2.0 document at https://api.teespring.com/swagger_doc/ declares NO
+  `securityDefinitions` block, so `derive-authentication.py` produced nothing. This profile is
+  SEARCHED from the prose and per-operation parameters on the Spring API docs page, which document
+  the scheme explicitly. Nothing here is invented — every value below is quoted or read from a
+  parameter description in the live spec.
+api: Spring Seller API
+base_url: https://api.teespring.com/
+schemes:
+- id: access_token
+  type: apiKey
+  in: query
+  name: access_token
+  scope: seller
+  description: >-
+    Seller-scoped bearer credential passed as a URL query parameter (and as formData on POST
+    /seller/v1/messages/send). Every `seller/v1/*` operation declares it `required: true` with the
+    description "authentication token obtained from the V1 Auth API".
+  issued_by: POST /v1/auth-tokens
+  transport: query parameter
+  lifetime: 24 hours
+  lifetime_source: >-
+    "The token will expire after 24 hours and require a new request." (POST /v1/auth-tokens
+    description, https://api.teespring.com/swagger_doc/)
+  reissue: >-
+    "you can request a token as often as you want (it will always give you the current one)" —
+    the endpoint returns the CURRENT token rather than minting a new one per call.
+  rotation: not documented
+  revocation: not documented
+- id: app_id
+  type: apiKey
+  in: query
+  name: app_id
+  scope: application
+  description: >-
+    Application identifier issued by Spring/Teespring out of band. Required on the public
+    storefront reads (`GET /v1/campaigns/{slug}`) and required as formData on POST /v1/auth-tokens
+    alongside the account email and password.
+  issued_by: manual — "Obtain an app_id from Teespring." (docs page, step 1)
+  self_service: false
+  self_service_note: >-
+    No developer console, key page, or self-serve credential issuance was found on
+    api.teespring.com, spri.ng, amazecommerce.com or amaze.co. An agent has no anonymous path to
+    an app_id; a human must request one from Spring.
+token_flow:
+  steps:
+  - Obtain an app_id from Teespring.
+  - POST /v1/auth-tokens with formData app_id, email, password (the account's Spring/Teespring
+    login credentials).
+  - Read the access_token from the 201 response body.
+  - Send access_token as a query parameter on every subsequent seller request.
+  verbatim_docs: >-
+    "1. Obtain an app_id from Teespring. 2. Use the /v1/auth-tokens API endpoint with your email,
+    password, and the provided app_id. 3. Take the token from the response. This is your
+    access_token for future requests. It will last one day, and then you'll need a new one,
+    although you can request a token as often as you want (it will always give you the current
+    one). 4. Make sure your requests always have access_token set. Always use https for security!"
+  grant_type: resource owner password credentials (custom, non-OAuth2 endpoint)
+  response_status: 201
+  response_description: 'Logs in a user and returns an OAuth token'
+observations:
+  probed: '2026-08-13'
+  unauthenticated_reads:
+  - url: https://api.teespring.com/v1/search-suggestions/trending
+    status: 200
+    note: Returns real data with no credential at all — the only fully anonymous operation observed.
+  missing_credential_behavior:
+  - url: https://api.teespring.com/seller/v1/summary
+    status: 400
+    body: '{"error":"access_token is missing, period is missing"}'
+  - url: https://api.teespring.com/v1/campaigns/12345
+    status: 400
+    body: '{"error":{"message":"app_id is missing"}}'
+gaps:
+- No OAuth 2.0 authorization server, no OpenID Connect discovery, and no
+  /.well-known/oauth-authorization-server or /.well-known/oauth-protected-resource on any Amaze or
+  Spring host (all probed 2026-08-13, all 404/301 — see well-known/famous-well-known.yml).
+- No scopes. The access_token is all-or-nothing over the seller's account; there is no way to mint
+  a read-only or campaign-only credential.
+- Credentials are sent in the URL query string rather than an Authorization header, so tokens land
+  in proxy logs, browser history and Referer headers.
+- The token exchange requires the account PASSWORD, so any integration must hold the seller's
+  primary login credential rather than a revocable API key.

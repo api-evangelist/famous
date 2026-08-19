@@ -1,0 +1,41 @@
+generated: '2026-08-13'
+method: probed
+source: >-
+  live responses from https://api.teespring.com (2026-08-13) + a full read of
+  https://api.teespring.com/docs and https://kb.spri.ng/
+api: Spring Seller API
+limit_count: 0
+limit_count_note: >-
+  Spring publishes NO rate limits. The API docs page at https://api.teespring.com/docs carries only
+  the four authentication steps; the Spring knowledge base (kb.spri.ng) has no developer section at
+  all; and no terms page states a quota. This is an honest zero, not an unchecked field.
+limits: []
+response_headers:
+  observed: []
+  observed_note: >-
+    No X-RateLimit-*, RateLimit-*, or Retry-After header was present on any response observed on
+    2026-08-13. The full header set on a successful public read was: date, content-type,
+    cache-control, etag, x-correlation-id, x-request-id, x-runtime, x-rack-cache, vary, set-cookie,
+    expires, cf-cache-status, server, cf-ray. An agent has no runtime signal telling it how close
+    it is to a limit, and no signal telling it how long to back off.
+  probes:
+  - url: https://api.teespring.com/v1/search-suggestions/trending
+    status: 200
+    rate_limit_headers: none
+  - url: https://api.teespring.com/seller/v1/summary
+    status: 400
+    rate_limit_headers: none
+  - url: https://api.teespring.com/v1/campaigns/12345
+    status: 400
+    rate_limit_headers: none
+exhaustion_status_code: not documented and not observed
+enforcement:
+  edge: >-
+    Responses are fronted by Cloudflare (server: cloudflare, cf-ray present), so bot-management and
+    per-IP throttling almost certainly exist at the edge — but it is invisible to a client until it
+    fires, and the 429 body shape is undocumented.
+  application: unknown
+guidance_for_clients: >-
+  Treat the API as unmetered-but-unguaranteed. Because unknown paths answer 301 and a bad enum
+  answers 404, a client cannot distinguish throttling from routing by status code alone; assert
+  `content-type: application/json` and back off exponentially on any non-JSON response.

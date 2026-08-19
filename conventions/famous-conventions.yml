@@ -1,0 +1,135 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/famous-spring-api-swagger.json + https://api.teespring.com/docs + live response headers
+  observed on api.teespring.com 2026-08-13
+api: Spring Seller API
+base_url: https://api.teespring.com/
+auth_style:
+  summary: Query-parameter API key (`access_token` for seller scope, `app_id` for public reads).
+  header_based: false
+  see_also: authentication/famous-authentication.yml
+idempotency:
+  supported: false
+  header: null
+  scope: null
+  retention: null
+  evidence: >-
+    No Idempotency-Key, X-Idempotency-Key, or request-key parameter appears anywhere in the 24
+    published operations, and the docs page says nothing about safe retries. The three write
+    operations (POST /v1/auth-tokens, POST /seller/v1/messages/send, and the two inbound Stripe
+    webhook receivers) are all unguarded. POST /seller/v1/messages/send emails real buyers, so a
+    retried request after a timeout can double-send. NO `type: Idempotency` pointer is wired in
+    apis.yml, because the provider does not support it.
+pagination:
+  style: page-number
+  params:
+  - name: page
+    in: query
+    type: integer
+    description: page number to view
+  - name: per_page
+    in: query
+    type: integer
+    description: number of records per page
+  applies_to:
+  - GET /seller/v1/orders
+  - GET /seller/v1/campaigns
+  - GET /seller/v1/payouts
+  - GET /seller/v1/promotions
+  - GET /v1/recommenders/{recommender_id}/campaigns
+  - GET /v1/categories/{slug}/campaigns
+  defaults_documented: false
+  max_per_page_documented: false
+  response_envelope: not documented — the spec declares no response schemas, so the location of
+    total/next-page metadata is unknown without an authenticated call.
+  cursor_support: false
+filtering:
+  supported: true
+  patterns:
+  - name: comma-separated state filters
+    example: 'states=placed,charged'
+    operations: [GET /seller/v1/orders, GET /seller/v1/campaigns]
+    note: >-
+      Order states (failed, cancelled_and_refunded, cancelled, initialized, placed, charged;
+      default placed,charged) and campaign states (deleted, draft, active, suspended, success,
+      failed, archive, redirect, hidden) are enumerated in the parameter DESCRIPTION text only —
+      never as a JSON Schema `enum`, so no generated client can validate them.
+  - name: date-range filters
+    example: 'start_date=2026-01-01&end_date=2026-01-31'
+    format: YYYY-MM-DD
+    operations: [GET /seller/v1/orders]
+  - name: id-list filters
+    example: 'campaign_ids=1,2,3'
+    operations: [GET /seller/v1/orders]
+sorting:
+  supported: true
+  params: [sort_by_sales, sort_by_profit, recency]
+  values: asc | desc (documented in prose on sort_by_sales and sort_by_profit only)
+field_expansion:
+  supported: false
+sparse_fieldsets:
+  supported: false
+metadata:
+  custom_metadata_supported: false
+request_id_tracing:
+  supported: true
+  method: probed
+  headers:
+  - name: x-request-id
+    example_shape: uuid v4
+    observed: true
+  - name: x-correlation-id
+    example_shape: uuid v4
+    observed: true
+    note: >-
+      Spring's own open-source `correlation` Ruby gem (https://github.com/teespring/correlation,
+      "Manages a Correlation ID for a given web request") is what emits this header.
+  - name: x-runtime
+    description: server-side processing seconds, emitted on every response
+    observed: true
+  documented: false
+  documented_note: The headers are real and emitted on every response, but no documentation mentions them.
+versioning:
+  style: URI path segment
+  versions_in_use: [v1]
+  spec_info_version: '0.0.1'
+  version_header: null
+  policy_published: false
+  note: >-
+    Every path is prefixed /v1, /seller/v1 or /internal/v1. `info.version` in the published Swagger
+    document is "0.0.1" and has never been used to signal a release. No version negotiation header,
+    no dated versions, no deprecation channel. See lifecycle/famous-lifecycle.yml.
+error_envelope:
+  shapes:
+  - '{"error": "<string>"}'
+  - '{"error": {"message": "<string>"}}'
+  rfc9457: false
+  see_also: errors/famous-problem-types.yml
+rate_limit_signalling:
+  headers_returned: none observed
+  see_also: rate-limits/famous-rate-limits.yml
+caching:
+  supported: true
+  method: probed
+  evidence:
+  - url: https://api.teespring.com/v1/search-suggestions/trending
+    headers:
+      cache-control: 'public, max-age=30'
+      etag: 'W/"a68b13cb8a0ee9001dd651eb4f73501d"'
+      expires: present
+      cf-cache-status: MISS
+  note: >-
+    Public storefront reads are edge-cacheable with a weak ETag and a 30-second TTL; seller reads
+    answer `cache-control: no-cache`. Conditional requests (If-None-Match) are therefore possible
+    on the public surface even though nothing documents it.
+content_negotiation:
+  produces: [application/json]
+  consumes: [application/json, formData]
+  note: >-
+    POST /v1/auth-tokens and POST /seller/v1/messages/send take `formData` parameters, not a JSON
+    request body — an unusual choice for an API that returns JSON, and one a generated client will
+    get wrong if it assumes application/json on write.
+infrastructure:
+  edge: 'Cloudflare — server, cf-ray and cf-cache-status headers on every response'
+  origin: 'Rack/Ruby — x-runtime and x-rack-cache headers'

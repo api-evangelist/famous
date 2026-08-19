@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package subscriptionscoordinator.v1.healthcheck.v1;
+
+service SubscriptionsCoordinatorService {
+    rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse) {}
+}
+
+message HealthCheckRequest {}
+message HealthCheckResponse {
+    int32 status_code = 1;
+    string message = 2;
+}

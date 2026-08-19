@@ -1,0 +1,75 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://api.teespring.com/docs, openapi/famous-spring-api-swagger.json, https://kb.spri.ng/,
+  DNS probes of status.spri.ng and status.teespring.com (2026-08-13)
+api: Spring Seller API
+versioning:
+  policy_published: false
+  scheme: URI path segment (/v1, /seller/v1, /internal/v1)
+  current_version: v1
+  spec_info_version: '0.0.1'
+  version_negotiation_header: none
+  note: >-
+    No versioning policy page exists. The only version signal is the path prefix, and the Swagger
+    document's own `info.version` has sat at "0.0.1" — it is not used to communicate releases.
+deprecation:
+  policy_published: false
+  sunset_header: not observed
+  deprecation_header: not observed
+  rfc8594_support: false
+  deprecated_operations: []
+  deprecated_operations_note: >-
+    Zero of the 24 published operations carry `deprecated: true`. That is an absence of a marker,
+    not evidence of stability.
+  note: >-
+    No deprecation policy, no Sunset/Deprecation response headers, and no notice channel. NO
+    `type: Deprecation` pointer is wired in apis.yml.
+status_page:
+  exists: false
+  probes:
+  - host: status.spri.ng
+    result: NXDOMAIN
+  - host: status.teespring.com
+    result: NXDOMAIN
+  note: >-
+    No status page was found on any Amaze or Spring host. NO `type: StatusPage` pointer is wired in
+    apis.yml.
+sla:
+  published: false
+  uptime_commitment: none published
+  support_response_commitment: none published
+changelog:
+  exists: false
+  note: >-
+    No dated API changelog. https://blog.spri.ng/ is a creator-marketing blog, not a release feed,
+    and the Spring knowledge base (kb.spri.ng) has no developer section. NO `type: ChangeLog`
+    pointer is wired.
+brand_lifecycle:
+  note: >-
+    The API's own lifecycle is entangled with a chain of rebrands, which matters to any integrator
+    reading a stale docs link. Teespring became Spring (spri.ng); Spring is operated by Amaze
+    Holdings, Inc.; the newer product is Amaze Commerce (amazecommerce.com); and famous.co now 301s
+    to amaze.co. The API, however, still lives on the ORIGINAL teespring.com domain, still says
+    "Teespring" in its own docs prose ("Obtain an app_id from Teespring"), and has not been
+    re-homed or re-documented under any of the newer brands.
+  observed_redirects:
+  - from: https://famous.co/
+    to: https://amaze.co/
+    status: 301
+  - from: https://spri.ng/
+    to: https://www.spri.ng/
+    status: 302
+signals_of_decay:
+- The Swagger UI page at https://api.teespring.com/docs is served by a Swagger UI vintage that
+  predates OpenAPI 3.0, and the contract itself is Swagger 2.0.
+- The three first-party Protobuf packages Amaze publishes to npm were last released 2023-06 to
+  2025-01 (see packages/famous-packages.yml).
+- The github.com/teespring organisation's non-fork repositories were last pushed in 2016, apart
+  from four "Forking for posterity" backup repos (amaze-lab-backup, amaze-market-backup,
+  amaze-store-nextjs-backup, amaze-custom-storefronts-solid-backup, 2022-2025).
+signals_of_life:
+- >-
+  The API answers live — GET https://api.teespring.com/v1/search-suggestions/trending returned 200
+  with real data on 2026-08-13.
+- The GitHub organisation profile was updated 2026-05-28.

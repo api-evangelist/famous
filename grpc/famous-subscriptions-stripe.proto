@@ -1,0 +1,230 @@
+syntax = "proto3";
+
+package subscriptionscoordinator.v1.stripe.v1;
+
+service StripeService {
+    rpc CreateSubscription(CreateSubscriptionRequest) returns (CreateSubscriptionResponse) {};
+    rpc CancelSubscription(CancelSubscriptionRequest) returns (CancelSubscriptionResponse) {};
+    rpc ResubscribeSubscription(ResubscribeSubscriptionRequest) returns (ResubscribeSubscriptionResponse) {};
+    rpc CreateCustomer(CreateCustomerRequest) returns (CreateCustomerResponse) {};
+    rpc AttachPaymentMethod(AttachPaymentMethodRequest) returns (AttachPaymentMethodResponse) {}; // Attach a Payment method to existing customer
+    rpc FetchPaymentMethods(FetchPaymentMethodsRequest) returns (FetchPaymentMethodsResponse) {};
+    rpc EditPaymentMethod(EditPaymentMethodRequest) returns (EditPaymentMethodResponse) {};
+    rpc DetachPaymentMethod(DetachPaymentMethodRequest) returns (DetachPaymentMethodResponse) {};
+    rpc CreateSetupIntent(CreateSetupIntentRequest) returns (CreateSetupIntentResponse) {};
+}
+
+message SubscriptionProductItem {
+    string product_id = 2;
+    string currency = 3;
+    int32 count = 4;
+    int32 quantity = 5;
+    string interval = 6;
+}
+
+message CreateSubscriptionRequest {
+    string customer = 1; // Id of customer
+    repeated SubscriptionProductItem items = 2;
+    string metadata = 3; // stringified json blob
+}
+
+message CreateSubscriptionResponse {
+    bool success = 1;
+    oneof response {
+       CreateSubscriptionSuccessResponse res = 2;
+       CreateSubscriptionErrorResponse error = 3;
+    }
+}
+
+message CreateSubscriptionSuccessResponse {
+    string id = 1;
+    string status = 2;
+    string client_secret = 3;
+    string payment_method = 4;
+}
+
+message CreateSubscriptionErrorResponse {
+    string error = 1;
+}
+
+message CancelSubscriptionRequest {
+    string user_id = 1; // Id of customer
+    string subscription_id = 2;
+}
+
+message CancelSubscriptionResponse {
+    bool success = 1;
+    oneof response {
+       CancelSubscriptionSuccessResponse res = 2;
+       CancelSubscriptionErrorResponse error = 3;
+    }
+}
+
+message CancelSubscriptionSuccessResponse {
+    string id = 1;
+    string status = 2;
+}
+
+message CancelSubscriptionErrorResponse {
+    string error = 1;
+}
+
+message ResubscribeSubscriptionRequest {
+    string user_id = 1; // Id of customer
+    string subscription_id = 2;
+}
+
+message ResubscribeSubscriptionResponse {
+    bool success = 1;
+    oneof response {
+        ResubscribeSubscriptionSuccessResponse res = 2;
+        ResubscribeSubscriptionErrorResponse error = 3;
+    }
+}
+
+message ResubscribeSubscriptionSuccessResponse {
+    string id = 1;
+    string status = 2;
+}
+
+message ResubscribeSubscriptionErrorResponse {
+    string error = 1;
+}
+
+
+message CreateCustomerRequest {
+    string name = 1; // Id of customer
+    string email = 2;
+    string payment_method = 3;
+    string metadata = 4;
+}
+
+message CreateCustomerResponse {
+    bool success = 1;
+    oneof response {
+       CreateCustomerSuccessResponse res = 2;
+       CreateCustomerErrorResponse error = 3;
+    }
+}
+
+message CreateCustomerSuccessResponse {
+    string id = 1;
+}
+
+message CreateCustomerErrorResponse {
+    string error = 1;
+}
+
+message AttachPaymentMethodRequest {
+    string payment_method = 1; 
+    string id = 2; // Id of customer
+}
+
+message AttachPaymentMethodResponse {
+    bool success = 1;
+    oneof response {
+        AttachPaymentMethodSuccessResponse res = 2;
+        AttachPaymentMethodErrorResponse error = 3;
+    }
+}
+
+message AttachPaymentMethodSuccessResponse {
+    string id = 1;
+}
+
+message AttachPaymentMethodErrorResponse {
+    string error = 1;
+}
+
+message FetchPaymentMethodsRequest {
+    string user_id = 1; // Id of customer
+}
+
+message FetchPaymentMethodsResponse {
+    bool success = 1;
+    oneof response {
+        FetchPaymentMethodsSuccessResponse res = 2;
+        FetchPaymentMethodsErrorResponse error = 3;
+    }
+}
+
+message FetchPaymentMethodsSuccessResponse {
+    repeated PaymentMethodDetails payment_methods = 1;
+}
+
+message PaymentMethodDetails {
+    string id = 1; // Stripe Payment Method Id
+    string customer_id = 2;
+    string created = 3;
+    string brand = 4;
+    string last4 = 5;
+    string logo = 6;
+}
+
+message FetchPaymentMethodsErrorResponse {
+    string error = 1;
+}
+
+message EditPaymentMethodRequest {
+    string user_id = 1; // Id of customer
+    string current_payment_method = 2;
+    string new_payment_method = 3;
+}
+
+message EditPaymentMethodResponse {
+    bool success = 1;
+    oneof response {
+        EditPaymentMethodSuccessResponse res = 2;
+        EditPaymentMethodErrorResponse error = 3;
+    }
+}
+
+message EditPaymentMethodSuccessResponse {
+    string id = 1;
+}
+
+message EditPaymentMethodErrorResponse {
+    string error = 1;
+}
+
+message DetachPaymentMethodRequest {
+    string user_id = 1; // Id of customer
+    string payment_method = 2;
+}
+
+message DetachPaymentMethodResponse {
+    bool success = 1;
+    oneof response {
+        DetachPaymentMethodSuccessResponse res = 2;
+        DetachPaymentMethodErrorResponse error = 3;
+    }
+}
+
+message DetachPaymentMethodSuccessResponse {
+    string id = 1;
+}
+
+message DetachPaymentMethodErrorResponse {
+    string error = 1;
+}
+
+message CreateSetupIntentRequest {
+    string payment_method = 1;
+}
+
+message CreateSetupIntentResponse {
+    bool success = 1;
+    oneof response {
+        CreateSetupIntentSuccessResponse res = 2;
+        CreateSetupIntentErrorResponse error = 3;
+    }
+}
+
+message CreateSetupIntentSuccessResponse {
+    string id = 1;
+    string client_secret = 2;
+}
+
+message CreateSetupIntentErrorResponse {
+    string error = 1;
+}

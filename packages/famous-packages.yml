@@ -1,0 +1,122 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  registry.npmjs.org metadata endpoints + https://github.com/teespring (queried 2026-08-13)
+client_sdk_summary:
+  first_party_client_sdk_for_the_public_api: none
+  note: >-
+    Amaze/Spring publishes NO client library for the Spring Seller API in any language — npm, PyPI,
+    RubyGems, Packagist, crates.io, NuGet, Maven Central and pkg.go.dev were all checked and the
+    docs page at https://api.teespring.com/docs links no SDK. Because of that, NO `type: SDKs`
+    pointer is wired in apis.yml; wiring one would credit Amaze with client libraries it does not
+    ship. The four packages below ARE first-party (published by npm accounts ending -amaze /
+    -amazeco, from repos in github.com/teespring), but three are internal gRPC service contracts
+    and one is an internal React design system — none of them wraps the public REST API.
+packages:
+- language: javascript
+  registry: npm
+  name: '@teespring/subscriptionscoordinator-proto'
+  url: https://www.npmjs.com/package/@teespring/subscriptionscoordinator-proto
+  install: npm install @teespring/subscriptionscoordinator-proto
+  official: true
+  official_evidence: >-
+    Published under the @teespring npm scope by maintainers rmassey-amaze, angela-amaze,
+    jeff_amaze, natalia-amaze, rmassey-amazeco; repository git+https://github.com/teespring/subscriptions-coordinator.git
+  version: 1.2.7
+  published: '2025-01-13'
+  release_count: 40
+  kind: protobuf-contract
+  wraps: internal Subscriptions Coordinator gRPC service (DNS, Netlify, OpenSRS, Stripe, Stripe
+    webhooks, subscriptions, health check)
+  artifact: grpc/famous-subscriptions-*.proto
+  note: >-
+    Ships `.proto` sources plus generated grpc_pb JS. Not a client for the Spring Seller API. The
+    newest of the three proto packages and the only one released in 2025.
+- language: javascript
+  registry: npm
+  name: '@teespring/user-identity-service-proto'
+  url: https://www.npmjs.com/package/@teespring/user-identity-service-proto
+  install: npm install @teespring/user-identity-service-proto
+  official: true
+  official_evidence: same @teespring scope + amaze maintainer accounts; repository
+    git+https://github.com/teespring/user-identity-service.git
+  version: 0.8.0
+  published: '2023-08-09'
+  release_count: 10
+  kind: protobuf-contract
+  wraps: internal UserIdentityService gRPC service (identity, onboarding slides, persona survey)
+  artifact: grpc/famous-user-identity-service.proto
+  decay_note: >-
+    Last released 2023-08-09 — three years stale as of this pass, and still on a 0.x version.
+- language: javascript
+  registry: npm
+  name: '@teespring/onboarding-proto'
+  url: https://www.npmjs.com/package/@teespring/onboarding-proto
+  install: npm install @teespring/onboarding-proto
+  official: true
+  official_evidence: same @teespring scope + amaze maintainer accounts; repository
+    git+https://github.com/teespring/onboarding-service.git
+  version: 1.1.0
+  published: '2023-06-16'
+  release_count: 16
+  kind: protobuf-contract
+  wraps: internal Onboarding gRPC services (TaskListService, TaskListStatusService, health check)
+  artifact: grpc/famous-onboarding-*.proto
+  decay_note: Last released 2023-06-16 — three years stale as of this pass.
+- language: javascript
+  registry: npm
+  name: amaze-ui-library
+  url: https://www.npmjs.com/package/amaze-ui-library
+  install: npm install amaze-ui-library
+  official: true
+  official_evidence: >-
+    Description "This is Amaze own React UI library and design system."; repository
+    git+https://github.com/teespring/amaze-ui-library.git; maintainer nahrin-amaze
+  version: 0.0.13
+  published: '2023-04-19'
+  release_count: 13
+  kind: ui-component-library
+  wraps: nothing — internal React design system, not an API client
+  decay_note: >-
+    Last released 2023-04-19 and never left 0.0.x. Unscoped on npm (no @teespring/ prefix), so it
+    is trivially typosquattable.
+registries_checked:
+- registry: npm
+  queries:
+  - https://registry.npmjs.org/-/v1/search?text=teespring
+  - https://registry.npmjs.org/-/v1/search?text=scope:teespring
+  - https://registry.npmjs.org/-/v1/search?text=scope:amaze
+  - https://registry.npmjs.org/-/v1/search?text=amaze-commerce
+  result: >-
+    4 first-party packages found (above). The scoped searches return 0 because npm's search index
+    does not expose the @teespring scope listing; the packages were confirmed individually against
+    registry.npmjs.org/<pkg>. The only other "teespring" hit — `teespring@0.1.2`, described as
+    "Unofficial wrapper for Teespring's private API", published 2016-01-11 by an unrelated author —
+    is explicitly third-party and is NOT recorded as an Amaze package.
+- registry: PyPI
+  result: no first-party Amaze/Spring/Teespring package
+- registry: RubyGems
+  result: >-
+    no first-party CLIENT library. github.com/teespring publishes Ruby infrastructure gems
+    (`correlation`, `nightwing`) as source, not as an API SDK.
+- registry: crates.io
+  result: none
+- registry: NuGet
+  result: none
+- registry: Maven Central
+  result: none
+- registry: pkg.go.dev
+  result: none
+third_party:
+- language: javascript
+  registry: npm
+  name: teespring
+  url: https://www.npmjs.com/package/teespring
+  official: false
+  version: 0.1.2
+  published: '2016-01-11'
+  description: 'Unofficial wrapper for Teespring''s private API'
+  repository: https://github.com/samuelcouch/node-teespring
+  note: >-
+    Recorded for completeness only. Ten years unmaintained, third-party, and it wraps a "private"
+    API rather than the documented Seller API.

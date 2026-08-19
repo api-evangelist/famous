@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package subscriptionscoordinator.v1.dns.v1;
+
+service DNSService {
+    rpc VerifyApexService(VerifyApexServiceRequest) returns (VerifyApexServiceResponse) {}
+    rpc VerifyCNAMEService(VerifyCNAMEServiceRequest) returns (VerifyCNAMEServiceResponse) {}
+    rpc GetDNSVerificationStatusService(GetDNSVerificationStatusServiceRequest) returns (GetDNSVerificationStatusServiceResponse) {}
+    rpc GetDNSVerificationStatusVerifyDomainService(GetDNSVerificationStatusVerifyDomainServiceRequest) returns (GetDNSVerificationStatusVerifyDomainServiceResponse) {}
+    rpc IsValidCustomDomainService(IsValidCustomDomainServiceRequest) returns (IsValidCustomDomainServiceResponse) {}
+}
+
+message VerifyApexServiceRequest {
+    string hostname = 1;
+}
+
+message VerifyApexServiceResponse {
+    string type = 1;
+    string host = 2;
+    string value = 3;
+    bool success = 4;
+}
+
+message VerifyCNAMEServiceRequest {
+    string hostname = 1;
+    bool is_subdomain = 2;
+}
+
+message VerifyCNAMEServiceResponse {
+    string type = 1;
+    string host = 2;
+    string value = 3;
+    bool success = 4;
+}
+
+message GetDNSVerificationStatusServiceRequest {
+    string hostname = 1;
+    bool build_site = 2;
+}
+
+message GetDNSVerificationStatusServiceResponse {
+    string dns_verification_status = 1;
+}
+
+message GetDNSVerificationStatusVerifyDomainServiceRequest {
+    string hostname = 1;
+    bool build_site = 2;
+    string store_id = 3;
+    string user_id = 4;
+    string site_name = 5;
+    string email = 6;
+}
+
+message GetDNSVerificationStatusVerifyDomainServiceResponse {
+    string dns_verification_status = 1;
+}
+
+
+message IsValidCustomDomainServiceRequest {
+    string domain = 1;
+}
+
+message IsValidCustomDomainServiceResponse {
+    bool is_valid = 1;
+    string store_slug = 2;
+}

@@ -1,0 +1,285 @@
+syntax = "proto3";
+
+package subscriptionscoordinator.v1.subscriptions.v1;
+
+service SubscriptionsService {
+    rpc GetSubscriptions(GetSubscriptionsRequest) returns (GetSubscriptionsResponse) {}
+    rpc GetSubscriptionsWithToolsPages(GetSubscriptionsWithToolsPagesRequest) returns (GetSubscriptionsWithToolsPagesResponse) {}
+    rpc GetUserSubscriptions(GetUserSubscriptionsRequest) returns (GetUserSubscriptionsResponse) {}
+    rpc UpdateUserSubscriptions(UpdateUserSubscriptionsRequest) returns (UpdateUserSubscriptionsResponse) {}
+    rpc GetUserStoreDomains(GetUserStoreDomainsRequest) returns (GetUserStoreDomainsResponse) {} // match data format in dashboard
+    rpc DeleteCustomDomain(DeleteCustomDomainRequest) returns (DeleteCustomDomainResponse) {}
+    rpc CancelUserSubscriptions(CancelUserSubscriptionsRequest) returns(CancelUserSubscriptionsResponse) {}
+}
+
+//  Subscription Data types
+message SubDataPurchaseDomain {
+  string store_id = 1;
+  string domain = 2;
+  string domain_id = 3;
+  string netlify_site_id = 4;
+  string primary = 5;
+  string status = 6;
+  bool is_registered_with_spring = 7;
+  string facebook_pixel_verification_code = 8;
+  string site_name = 9;
+}
+
+message SubDataConnectedDomain {
+  string store_id = 1;
+  repeated string domains = 2;
+  repeated string domain_ids = 3;
+  string netlify_site_id = 4;
+  string primary = 5;
+  string status = 6;
+  bool is_registered_with_spring = 7;
+  string facebook_pixel_verification_code = 8;
+  string site_name = 9;
+}
+
+enum SubType {
+  SUB_TYPE_UNSPECIFIED = 0;
+  SUB_TYPE_PURCHASE_DOMAIN = 1;
+  SUB_TYPE_CONNECT_DOMAIN =  2;
+  SUB_TYPE_SPRING_MARK = 3;
+  SUB_TYPE_AI_TOKEN = 4;
+}
+
+message SubscriptionDataWrapper {
+  SubType type = 1;
+  oneof data {
+    SubDataPurchaseDomain purchased_domain_sub = 2;
+    SubDataConnectedDomain connected_domain_sub = 3;
+  }
+}
+
+message UserSubscription {
+  string id = 1;
+  repeated SubscriptionProduct products = 2;
+  SubscriptionDataWrapper subscription_data = 3;
+  string expiration_date = 4;
+  string payment_vendor_subscription_data = 5;
+  string payment_vendor = 6;
+  string payment_vendor_subscription_id = 7;
+}
+
+message GetUserSubscriptionsErrorResponse {
+  string error = 1;
+}
+
+message GetUserSubscriptionsSuccessResponse {
+  repeated UserSubscription subscriptions = 1;
+}
+
+message GetUserSubscriptionsResponse {
+  bool success = 1;
+  oneof response {
+    GetUserSubscriptionsErrorResponse error = 2;
+    GetUserSubscriptionsSuccessResponse res = 3;
+  }
+}
+
+message GetUserSubscriptionsRequest {
+  string user_id = 1;
+}
+
+message SubscriptionProductWithToolsPageMetadata {
+  SubscriptionProduct subscription_product = 1;
+  ToolsPageMetadata tools_page_metadata = 2;
+}
+
+message SubscriptionProduct {
+  string id = 1;
+  string product_name = 2;
+  string display_name = 3;
+  string product_description = 4;
+  bool active = 5;
+}
+
+message ToolsPageMetadata {
+  string id = 1;
+  string subscription_product_id = 2;
+  Icon icon = 3;
+  MainImage main_image = 4;
+  string overview = 5;
+  repeated WhatsIncluded whats_included = 6;
+  string next_steps = 7;
+  string purchase_complete_url = 8;
+  string legal_disclaimer = 9;
+  string support_link = 10;
+  string email_template_id = 11;
+  PurchaseButton purchase_button = 12;
+}
+
+message Icon {
+  string url = 1;
+  string alt = 2;
+}
+
+message MainImage {
+  string url = 1;
+  string alt = 2;
+}
+
+message WhatsIncluded {
+  string icon = 1;
+  string text = 2;
+  bool is_new = 3;
+}
+
+message PurchaseButton {
+  PurchaseOption unsubscribed = 1;
+  PurchaseOption subscribed = 2;
+
+  message PurchaseOption {
+    string icon = 1;
+    string url = 2;
+    string title = 3;
+  }
+}
+
+message GetSubscriptionsRequest {}
+message GetSubscriptionsResponse {
+  repeated SubscriptionProduct subscriptions = 1;
+}
+
+message GetSubscriptionsWithToolsPagesRequest {
+  string subscription_product_id = 1;
+}
+message GetSubscriptionsWithToolsPagesResponse {
+  SubscriptionProductWithToolsPageMetadata subscription = 1;
+}
+
+message UpdateUserSubscriptionsRequest {
+  string url = 1;
+  string store_id = 2;
+  string primary = 3;
+  string user_id = 4;
+}
+
+message UpdatedSubscription {
+  string store_id = 1;
+  string url = 2;
+  int64 id = 3;
+  string netlify_site_id = 4;
+  string primary = 5;
+  string status = 6;
+  bool is_registered_with_spring = 7;
+  string facebook_pixel_verification_code = 8;
+  string user_id = 9;
+  string netlify_build_status = 10;
+  string netlify_build_error = 11;
+  string dns_verification_status = 12;
+}
+
+message UpdateUserSubscriptionsErrorResponse {
+  string error = 1;
+}
+
+message UpdateUserSubscriptionsSuccessResponse {
+  UpdatedSubscription subscription = 1 [deprecated=true];
+  UserStoreDomainUUID subscription_uuid = 2;
+}
+
+message UpdateUserSubscriptionsResponse {
+  bool success = 1;
+  oneof response {
+    UpdateUserSubscriptionsErrorResponse error = 2;
+    UpdateUserSubscriptionsSuccessResponse res = 3;
+  }
+}
+
+message GetUserStoreDomainsRequest {
+  string store_id = 2;
+  string user_id = 4;
+}
+
+message UserStoreDomain {
+  option deprecated = true;
+  string store_id = 1;
+  string url = 2;
+  int64 id = 3;
+  string netlify_site_id = 4;
+  string primary = 5;
+  string status = 6;
+  bool is_registered_with_spring = 7;
+  string facebook_pixel_verification_code = 8;
+  string user_id = 9;
+  string netlify_build_status = 10;
+  string netlify_build_error = 11;
+  string dns_verification_status = 12;
+}
+
+message UserStoreDomainUUID {
+  string store_id = 1;
+  string url = 2;
+  string id = 3;
+  string netlify_site_id = 4;
+  string primary = 5;
+  string status = 6;
+  bool is_registered_with_spring = 7;
+  string facebook_pixel_verification_code = 8;
+  string user_id = 9;
+  string netlify_build_status = 10;
+  string netlify_build_error = 11;
+  string dns_verification_status = 12;
+}
+
+message GetUserStoreDomainsErrorResponse {
+  string error = 1;
+}
+
+message GetUserStoreDomainsSuccessResponse {
+  repeated UserStoreDomain user_store_domains = 1 [deprecated=true];
+  repeated UserStoreDomainUUID user_store_domains_uuid = 2;
+}
+
+message GetUserStoreDomainsResponse {
+  bool success = 1;
+  oneof response {
+    GetUserStoreDomainsErrorResponse error = 2;
+    GetUserStoreDomainsSuccessResponse res = 3;
+  }
+}
+
+message DeleteCustomDomainRequest {
+  string store_id = 1;
+  string domain_id = 2;
+  string netlify_site_id = 3;
+}
+
+message DeleteCustomDomainErrorResponse {
+  string error = 1;
+}
+
+message DeleteCustomDomainSuccessResponse {
+  string domain_id = 1;
+}
+
+message DeleteCustomDomainResponse {
+  bool success = 1;
+  oneof response {
+    DeleteCustomDomainErrorResponse error = 2;
+    DeleteCustomDomainSuccessResponse res = 3;
+  }
+}
+
+message CancelUserSubscriptionsRequest {
+  string user_id = 1;
+}
+
+message CancelUserSubscriptionsErrorResponse {
+  string message = 1;
+}
+
+message CancelUserSubscriptionsSuccessResponse {
+  string user_id = 1;
+}
+
+message CancelUserSubscriptionsResponse {
+  bool success = 1;
+  oneof response {
+    CancelUserSubscriptionsErrorResponse error = 2;
+    CancelUserSubscriptionsSuccessResponse res = 3;
+  }
+}

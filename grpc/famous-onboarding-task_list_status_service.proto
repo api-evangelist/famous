@@ -1,0 +1,83 @@
+syntax="proto3";
+
+package task_list_status_service.v1;
+
+service TasklistStatusService {
+    rpc GetTasklistStatus (GetTasklistStatusRequest) returns (GetTasklistStatusResponse);
+    rpc CreateTasklistStatus (CreateTasklistStatusRequest) returns (CreateTasklistStatusResponse);
+    rpc UpdateTasklistStatus (UpdateTasklistStatusRequest) returns (UpdateTasklistStatusResponse);
+    rpc RemoveTasklistStatus (RemoveTasklistStatusRequest) returns (RemoveTasklistStatusResponse);
+}
+
+message TasklistStatusRequest {
+    string id = 1;
+    repeated string completed_tasks = 2;
+    string dismissed_at = 3; 
+    string user_id = 4;
+    string task_list_id = 5;
+    string name = 6;
+    string completed_at = 7;
+}
+
+message TaskListStatusSuccessResponse {
+    string id = 1;
+    string task_list_id = 2;
+    string user_id = 3;
+    repeated string completed_tasks = 4;
+    string completed_at = 5;
+    string created_at = 6;
+    string dismissed_at = 7; 
+}
+
+message TaskListStatusErrorResponse {
+    string error = 1;
+}
+
+message GetTasklistStatusRequest {
+    TasklistStatusRequest status = 1;
+}
+
+message RemoveTasklistStatusRequest {
+    TasklistStatusRequest status = 1;
+}
+
+message CreateTasklistStatusRequest {
+    TasklistStatusRequest status = 1;
+}
+
+message UpdateTasklistStatusRequest {
+    TasklistStatusRequest status = 1;
+}
+
+message GetTasklistStatusResponse {
+    bool success = 1;
+    oneof response { 
+        TaskListStatusSuccessResponse res = 2;
+        TaskListStatusErrorResponse error = 3;
+    }
+}
+
+message UpdateTasklistStatusResponse {
+    bool success = 1;
+    oneof response { 
+        TaskListStatusSuccessResponse res = 2;
+        TaskListStatusErrorResponse error = 3;
+    }
+}
+
+message CreateTasklistStatusResponse {
+    bool success = 1;
+    oneof response { 
+        TaskListStatusSuccessResponse res = 2;
+        TaskListStatusErrorResponse error = 3;
+    }
+}
+
+message RemoveTasklistStatusResponse {
+    bool success = 1;
+    oneof response { 
+        TaskListStatusSuccessResponse res = 2;
+        TaskListStatusErrorResponse error = 3;
+    }
+}
+

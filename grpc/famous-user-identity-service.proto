@@ -1,0 +1,157 @@
+syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
+
+package useridentityservice.v1;
+
+////////////////////////////////////////
+//        SERVICE DEFINITIONS         //
+////////////////////////////////////////
+
+service UserIdentityService {
+    rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse) {}
+
+    rpc CreateOrGetUserIdentity(CreateOrGetUserIdentityRequest) returns (CreateOrGetUserIdentityResponse) {}
+    rpc GetUserIdentity(GetUserIdentityRequest) returns (GetUserIdentityResponse) {}
+    rpc GetOnboardingSlides(GetOnboardingSlidesRequest) returns (GetOnboardingSlidesResponse) {}
+    rpc GetPersonaSurveyContent(GetPersonaSurveyContentRequest) returns (GetPersonaSurveyContentResponse) {}
+    rpc RecordOnboardingAttempt(RecordOnboardingAttemptRequest) returns (RecordOnboardingAttemptResponse) {}
+    rpc RecordOnboardingSkip(RecordOnboardingSkipRequest) returns (RecordOnboardingSkipResponse) {}
+    rpc SubmitPersonaSurveyAnswer(PersonaSurveySubmissionRequest) returns (PersonaSurveySubmissionResponse) {}
+}
+
+////////////////////////////////////////
+//        MSG TYPE DEFINITIONS        //
+////////////////////////////////////////
+
+message HealthCheckRequest {}
+message HealthCheckResponse {
+    google.protobuf.Int32Value status_code = 1;
+    string message = 2;
+}
+
+message CreateOrGetUserIdentityRequest {
+    int32 id = 1;
+    string email = 2;
+    string name = 3;
+}
+message CreateOrGetUserIdentityResponse {
+    int32 id = 1;
+    string public_id = 2;
+    string email = 3;
+    string name = 4;
+    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp modified_at = 6;
+    string message = 7;
+    google.protobuf.BoolValue success = 8;
+    google.protobuf.BoolValue new_user_created = 9;
+    google.protobuf.BoolValue force_skip_slides_survey = 10;
+    PersonaSurveyProgress persona_survey_progress = 11;
+}
+
+message GetUserIdentityRequest {
+    int32 id = 1;
+}
+message GetUserIdentityResponse {
+    int32 id = 1;
+    string email = 2;
+    string name = 3;
+    google.protobuf.Timestamp created_at = 4;
+    google.protobuf.Timestamp modified_at = 5;
+}
+
+message GetOnboardingSlidesRequest {
+    int32 user_id = 1; // Optional, unused for now, may be used later for dynamic onboarding
+}
+message GetOnboardingSlidesResponse {
+    repeated OnboardingSlideData slide_data = 1;
+}
+
+message GetPersonaSurveyContentRequest {
+    int32 user_id = 1; // Optional, unused for now, may be used later for dynamic onboarding
+}
+message GetPersonaSurveyContentResponse {
+    repeated PersonaSurveyQuestions persona_survey_questions = 1;
+}
+
+message RecordOnboardingAttemptRequest {
+    string public_id = 1;
+}
+message RecordOnboardingAttemptResponse {
+    google.protobuf.BoolValue success = 1;
+    string message = 2;
+    google.protobuf.BoolValue allow_skip = 3;
+}
+
+message RecordOnboardingSkipRequest {
+    string public_id = 1;
+}
+message RecordOnboardingSkipResponse {
+    google.protobuf.BoolValue success = 1;
+    string message = 2;
+}
+
+message PersonaSurveySubmissionRequest {
+    string public_id = 1;
+    int32 category_id = 2;
+    oneof values_field {
+        PersonaSurveySubmissionValues values = 3;
+        int32 value = 4;
+    }
+}
+message PersonaSurveySubmissionResponse {
+    google.protobuf.BoolValue success = 1;
+    string message = 2;
+}
+
+////////////////////////////////////////
+// NESTED/HELPER MSG TYPE DEFINITIONS //
+////////////////////////////////////////
+
+message PersonaSurveyProgress {
+    repeated string categories = 1;
+    PersonaSurveyAnswers answers = 2;
+}
+message PersonaSurveyAnswers {
+    repeated int32 profession = 1;
+    repeated int32 industry = 2;
+    repeated int32 platform = 3;
+    int32 approx_followers = 4;
+}
+
+message OnboardingSlideData {
+    int32 slide_id = 1;
+    int32 ordering = 2;
+    OnboardingSlideContent content = 3;
+}
+message OnboardingSlideContent {
+    string intro = 1;
+    string header = 2;
+    string text = 3;
+    string image = 4;
+}
+
+message PersonaSurveyQuestions {
+    string category = 1;
+    string header = 2;
+    oneof values_field {
+        PersonaSurveyQuestionMultichoice values = 3;
+        int32 no_values = 4;
+    }
+    string special_type = 5;
+}
+message PersonaSurveyQuestionMultichoice {
+    repeated PersonaSurveyQuestionValues values = 1;
+}
+message PersonaSurveyQuestionValues {
+    int32 id = 1;
+    string name = 2;
+    string description = 3;
+    int32 ordering = 4;
+    string image = 5;
+}
+
+message PersonaSurveySubmissionValues {
+    repeated int32 values = 1;
+}

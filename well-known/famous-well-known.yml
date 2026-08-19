@@ -1,0 +1,153 @@
+generated: '2026-08-13'
+method: probed
+source: direct HTTPS probes, 2026-08-13
+result: no-hits
+result_note: >-
+  Every /.well-known/ path on every Amaze and Spring host missed. NO `type: WellKnown`,
+  `type: SecurityTxt` or `type: APICatalog` pointer is wired in apis.yml — this file records an
+  ABSENCE, and a pointer would assert that the provider serves a discovery surface it does not.
+hosts:
+- host: api.teespring.com
+  role: API host (apis.yml baseURL + Swagger `host`)
+  note: >-
+    Every /.well-known/* path answers 301 with a Rails redirect body ("You are being redirected"),
+    not a document. Unknown paths on this host redirect rather than 404 — see
+    errors/famous-problem-types.yml.
+  paths:
+  - path: /.well-known/security.txt
+    status: 301
+    file: null
+  - path: /security.txt
+    status: 301
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 301
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 301
+    file: null
+  - path: /.well-known/oauth-protected-resource
+    status: 301
+    file: null
+  - path: /.well-known/api-catalog
+    status: 301
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 301
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 301
+    file: null
+  - path: /.well-known/agent.json
+    status: 301
+    file: null
+- host: teespring.com
+  role: storefront + login host
+  note: All paths answer 403 from the edge bot challenge; no document was served.
+  paths:
+  - path: /.well-known/security.txt
+    status: 403
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 403
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+    file: null
+  - path: /.well-known/api-catalog
+    status: 403
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 403
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 403
+    file: null
+  - path: /.well-known/agent.json
+    status: 403
+    file: null
+- host: spri.ng
+  role: Spring product site
+  note: 302 to www.spri.ng, which then answers 404 on every path.
+  paths:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+    note: 302 -> https://www.spri.ng/.well-known/security.txt -> 404
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+- host: amaze.co
+  role: corporate site (famous.co 301 target)
+  paths:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+- host: amazecommerce.com
+  role: Amaze Commerce product site
+  note: >-
+    /security.txt answers 404 with a 9KB Webflow HTML page — a 404 status with a full page body,
+    not a document. Recorded as a miss.
+  paths:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+security_txt_note: >-
+  Spring DOES run a vulnerability-disclosure programme — it is published as an HTML page at
+  https://spri.ng/about/security with the address security.team@spri.ng — but it is not mirrored to
+  a machine-readable /.well-known/security.txt on any host. See
+  security/famous-vulnerability-disclosure.yml.

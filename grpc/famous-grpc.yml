@@ -1,0 +1,72 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  proto3 sources extracted verbatim from the first-party npm packages published under the
+  @teespring scope (registry.npmjs.org, fetched 2026-08-13). Each package ships its `.proto`
+  sources alongside generated grpc_pb JavaScript.
+ownership: >-
+  These are Amaze artifacts. The packages sit under the @teespring npm scope, their repositories
+  are github.com/teespring/*, and their npm maintainer accounts are rmassey-amaze, angela-amaze,
+  jeff_amaze, natalia-amaze, rmassey-amazeco and nahrin-amaze. The github.com/teespring
+  organisation's own profile is named "Spring" with blog spri.ng.
+caveat: >-
+  These describe INTERNAL Amaze services. No gRPC endpoint is published, no reflection service is
+  reachable, and none of these messages overlap with the public Spring Seller API's data model.
+  They are published CONTRACTS, not a callable public API.
+services:
+- file: famous-user-identity-service.proto
+  package_proto: useridentityservice.v1
+  service: UserIdentityService
+  rpcs:
+  - HealthCheck
+  - CreateOrGetUserIdentity
+  - GetUserIdentity
+  - GetOnboardingSlides
+  - GetPersonaSurveyContent
+  - RecordOnboardingAttempt
+  - RecordOnboardingSkip
+  - SubmitPersonaSurveyAnswer
+  npm_package: '@teespring/user-identity-service-proto'
+  version: 0.8.0
+  published: '2023-08-09'
+  source_url: https://registry.npmjs.org/@teespring/user-identity-service-proto/-/user-identity-service-proto-0.8.0.tgz
+  note: >-
+    Ships a buf.yaml, so the package is built with Buf. Describes creator identity plus the
+    onboarding slide deck and the persona survey (profession, industry, platform, approximate
+    follower count) Amaze collects at signup.
+- file: famous-onboarding-task_list_service.proto
+  package_npm: '@teespring/onboarding-proto'
+  version: 1.1.0
+  published: '2023-06-16'
+  source_url: https://registry.npmjs.org/@teespring/onboarding-proto/-/onboarding-proto-1.1.0.tgz
+  siblings:
+  - famous-onboarding-task_list_status_service.proto
+  - famous-onboarding-health_check_service.proto
+  note: Creator onboarding task lists and their per-user completion status.
+- file: famous-subscriptions-subscriptions.proto
+  package_npm: '@teespring/subscriptionscoordinator-proto'
+  version: 1.2.7
+  published: '2025-01-13'
+  source_url: https://registry.npmjs.org/@teespring/subscriptionscoordinator-proto/-/subscriptionscoordinator-proto-1.2.7.tgz
+  siblings:
+  - famous-subscriptions-stripe.proto
+  - famous-subscriptions-dns.proto
+  - famous-subscriptions-netlify.proto
+  - famous-subscriptions-opensrs.proto
+  - famous-subscriptions-subscriptionscoordinator.proto
+  note: >-
+    The Subscriptions Coordinator — Stripe subscriptions and Stripe webhook objects (invoice,
+    subscription), plus custom-domain plumbing against Netlify (site hosting) and OpenSRS (domain
+    registration) and a DNS service. The most recently released of the three and the clearest
+    picture of how Amaze provisions creator storefront domains.
+files:
+- famous-user-identity-service.proto
+- famous-onboarding-health_check_service.proto
+- famous-onboarding-task_list_service.proto
+- famous-onboarding-task_list_status_service.proto
+- famous-subscriptions-dns.proto
+- famous-subscriptions-netlify.proto
+- famous-subscriptions-opensrs.proto
+- famous-subscriptions-stripe.proto
+- famous-subscriptions-subscriptions.proto
+- famous-subscriptions-subscriptionscoordinator.proto
