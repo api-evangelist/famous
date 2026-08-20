@@ -48,6 +48,19 @@ tags:
 - Commerce
 - Live Shopping
 - Media
+- E-Commerce
+- Marketing
+- Print on Demand
+- Merchandise
+- Storefronts
+- Order
+- Payouts
+tags_raw:
+- Company
+- Creator Economy
+- Commerce
+- Live Shopping
+- Media
 - Ecommerce
 - Marketing
 - Print on Demand
@@ -73,6 +86,16 @@ apis:
   humanURL: https://api.teespring.com/docs
   baseURL: https://api.teespring.com/
   tags:
+  - Creator Economy
+  - E-Commerce
+  - Print on Demand
+  - Merchandise
+  - Campaigns
+  - Order
+  - Payouts
+  - Storefront
+  - Seller API
+  tags_raw:
   - creator-economy
   - ecommerce
   - print-on-demand
