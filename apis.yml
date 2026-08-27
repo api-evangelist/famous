@@ -69,45 +69,16 @@ tags_raw:
 - Orders
 - Payouts
 apis:
-- name: Spring Seller API
-  description: >-
-    The Spring (formerly Teespring) Seller API — a Swagger 2.0 contract with 24
-    operations across three surfaces: `seller/v1/*` (the authenticated seller's
-    dashboard, campaigns, orders, payouts, promotions, volume discounts, and
-    buyer messaging), `v1/*` (public storefront reads — campaigns, categories,
-    recommenders, rush prices, trending search suggestions — plus the
-    authenticated user profile and saved addresses/cards), and `internal/v1/*`
-    (inbound Stripe dispute webhook receivers). Authentication is a
-    seller-scoped `access_token` minted by POST /v1/auth-tokens from an email,
-    password, and an `app_id` that Spring issues on request; the token expires
-    after 24 hours. Public storefront reads take an `app_id` query parameter
-    instead. The API is served on api.teespring.com, Spring's legacy API host,
-    and is operated by Amaze Holdings, Inc.
+- aid: famous:famous-internal-api
+  name: Famous Internal API
+  description: Operations about internals
   humanURL: https://api.teespring.com/docs
   baseURL: https://api.teespring.com/
   tags:
-  - Creator Economy
-  - E-Commerce
-  - Print on Demand
-  - Merchandise
-  - Campaigns
-  - Order
-  - Payouts
-  - Storefront
-  - Seller API
-  tags_raw:
-  - creator-economy
-  - ecommerce
-  - print-on-demand
-  - merchandise
-  - campaigns
-  - orders
-  - payouts
-  - storefront
-  - seller-api
+  - internal
   properties:
   - type: OpenAPI
-    url: openapi/famous-spring-api-swagger.json
+    url: openapi/famous-internal-api-openapi.yml
   - type: Documentation
     url: https://api.teespring.com/docs
   - type: APIReference
@@ -124,8 +95,66 @@ apis:
     url: data-model/famous-data-model.yml
   - type: RateLimits
     url: rate-limits/famous-rate-limits.yml
-  - type: Overlay
-    url: overlays/famous-spring-api-overlay.yaml
+  - type: Conformance
+    url: conformance/famous-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/famous-lifecycle.yml
+- aid: famous:famous-seller-api
+  name: Famous Seller API
+  description: Operations about sellers
+  humanURL: https://api.teespring.com/docs
+  baseURL: https://api.teespring.com/
+  tags:
+  - seller
+  properties:
+  - type: OpenAPI
+    url: openapi/famous-seller-api-openapi.yml
+  - type: Documentation
+    url: https://api.teespring.com/docs
+  - type: APIReference
+    url: https://api.teespring.com/docs
+  - type: GettingStarted
+    url: https://api.teespring.com/docs
+  - type: Authentication
+    url: authentication/famous-authentication.yml
+  - type: Conventions
+    url: conventions/famous-conventions.yml
+  - type: ErrorCatalog
+    url: errors/famous-problem-types.yml
+  - type: DataModel
+    url: data-model/famous-data-model.yml
+  - type: RateLimits
+    url: rate-limits/famous-rate-limits.yml
+  - type: Conformance
+    url: conformance/famous-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/famous-lifecycle.yml
+- aid: famous:famous-v1-api
+  name: Famous V1 API
+  description: Operations about v1s
+  humanURL: https://api.teespring.com/docs
+  baseURL: https://api.teespring.com/
+  tags:
+  - v1
+  properties:
+  - type: OpenAPI
+    url: openapi/famous-v1-api-openapi.yml
+  - type: Documentation
+    url: https://api.teespring.com/docs
+  - type: APIReference
+    url: https://api.teespring.com/docs
+  - type: GettingStarted
+    url: https://api.teespring.com/docs
+  - type: Authentication
+    url: authentication/famous-authentication.yml
+  - type: Conventions
+    url: conventions/famous-conventions.yml
+  - type: ErrorCatalog
+    url: errors/famous-problem-types.yml
+  - type: DataModel
+    url: data-model/famous-data-model.yml
+  - type: RateLimits
+    url: rate-limits/famous-rate-limits.yml
   - type: Conformance
     url: conformance/famous-conformance.yml
   - type: Lifecycle
@@ -136,6 +165,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/famous-spring-api-overlay.yaml
 - type: DomainSecurity
   url: security/famous-domain-security.yml
 - type: Authentication
