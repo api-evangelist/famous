@@ -1,0 +1,66 @@
+openapi: 3.2.0
+info:
+  version: 0.0.1
+  title: Famous Internal API
+  description: Operations about internals
+servers:
+- url: https://api.teespring.com/
+tags:
+- name: internal
+  description: Operations about internals
+paths:
+  /internal/v1/stripe/dispute_closed:
+    post:
+      description: Register that a dispute was closed.
+      responses:
+        '201':
+          description: Register that a dispute was closed.
+      tags:
+      - internal
+      operationId: postInternalV1StripeDisputeClosed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data[object][id]:
+                  type: string
+                  description: This is the dispute ID
+                data[object][status]:
+                  type: string
+                  description: This is the status of the dispute
+              required:
+              - data[object][id]
+              - data[object][status]
+  /internal/v1/stripe/dispute_created:
+    post:
+      description: Register that a new dispute was created.
+      responses:
+        '201':
+          description: Register that a new dispute was created.
+      tags:
+      - internal
+      operationId: postInternalV1StripeDisputeCreated
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data[object][id]:
+                  type: string
+                  description: This is the dispute ID
+                data[object][charge]:
+                  type: string
+                  description: This is the charge ID, we use this to find the charge in dispute
+                data[object][status]:
+                  type: string
+                  description: This is the status of the dispute
+                data[object][reason]:
+                  type: string
+                  description: This is the reason of the dispute
+              required:
+              - data[object][id]
+              - data[object][charge]
+              - data[object][status]

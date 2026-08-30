@@ -1,0 +1,285 @@
+openapi: 3.2.0
+info:
+  version: 0.0.1
+  title: Famous V1 API
+  description: Operations about v1s
+servers:
+- url: https://api.teespring.com/
+tags:
+- name: v1
+  description: Operations about v1s
+paths:
+  /v1/users/me/saved-addresses:
+    get:
+      parameters:
+      - in: query
+        name: app_id
+        description: app ID (provided by Teespring)
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: access_token
+        description: authentication token obtained from the V1 Auth API
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: get SavedAddress(s)
+      tags:
+      - v1
+      operationId: getV1UsersMeSavedAddresses
+  /v1/users/me/saved-cards:
+    get:
+      parameters:
+      - in: query
+        name: app_id
+        description: app ID (provided by Teespring)
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: access_token
+        description: authentication token obtained from the V1 Auth API
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: get SavedCard(s)
+      tags:
+      - v1
+      operationId: getV1UsersMeSavedCards
+  /v1/users/me:
+    get:
+      description: Returns the currently authenticated user
+      parameters:
+      - in: query
+        name: app_id
+        description: app ID (provided by Teespring)
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: access_token
+        description: authentication token obtained from the V1 Auth API
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns the currently authenticated user
+      tags:
+      - v1
+      operationId: getV1UsersMe
+  /v1/search-suggestions/trending:
+    get:
+      description: Get trending search results
+      responses:
+        '200':
+          description: Get trending search results
+      tags:
+      - v1
+      operationId: getV1SearchSuggestionsTrending
+  /v1/rush-prices/{campaign_region_name}:
+    get:
+      description: GET active RushPrice offers in CampaignRegion
+      parameters:
+      - in: query
+        name: country_id
+        description: Country ID, for filtering
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: campaign_region_name
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: GET active RushPrice offers in CampaignRegion
+      tags:
+      - v1
+      operationId: getV1RushPricesCampaignRegionName
+  /v1/recommenders/{recommender_id}/campaigns:
+    get:
+      summary: Paginated collection of campaigns produced by a recommender
+      description: '
+
+
+        Fetches a paginated collection of campaigns produced by a recommender.'
+      parameters:
+      - in: query
+        name: app_id
+        description: app ID (provided by Teespring)
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: page
+        description: page number to view
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - in: query
+        name: per_page
+        description: number of records per page
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - in: path
+        name: recommender_id
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Paginated collection of campaigns produced by a recommender
+      tags:
+      - v1
+      operationId: getV1RecommendersRecommenderIdCampaigns
+  /v1/categories/{slug}/campaigns:
+    get:
+      summary: All campaigns in a category
+      description: '
+
+
+        Fetches all the campaigns within the specified category.'
+      parameters:
+      - in: query
+        name: app_id
+        description: app ID (provided by Teespring)
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: page
+        description: page number to view
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - in: query
+        name: per_page
+        description: number of records per page
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: All campaigns in a category
+      tags:
+      - v1
+      operationId: getV1CategoriesSlugCampaigns
+  /v1/categories/{slug}:
+    get:
+      description: Get category metdata
+      parameters:
+      - in: query
+        name: app_id
+        description: app ID (provided by Teespring)
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: page
+        description: page number to view
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - in: query
+        name: per_page
+        description: number of records per page
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - in: query
+        name: include_campaigns
+        description: Also include active campaigns
+        required: false
+        schema:
+          type: boolean
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Get category metdata
+      tags:
+      - v1
+      operationId: getV1CategoriesSlug
+  /v1/campaigns/{slug}:
+    get:
+      parameters:
+      - in: query
+        name: app_id
+        description: app ID (provided by Teespring)
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: currency
+        description: The currency to use for pricing
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: get Campaign(s)
+      tags:
+      - v1
+      operationId: getV1CampaignsSlug
+  /v1/auth-tokens:
+    post:
+      summary: Logs in a user and returns an OAuth token
+      description: '
+
+
+        Make the below request using your Teespring email and password, along with the `app_id` provided to you by Teespring. Copy the access token from the response and include it as the access_token url parameter for all subsequent requests. The token will expire after 24 hours and require a new request. Never share your access token with anyone. It will allow them to access your Teespring data until it expires.'
+      responses:
+        '201':
+          description: Logs in a user and returns an OAuth token
+      tags:
+      - v1
+      operationId: postV1AuthTokens
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                app_id:
+                  type: string
+                  description: app ID (provided by Teespring)
+                email:
+                  type: string
+                  description: Teespring e-mail address
+                password:
+                  type: string
+                  description: Teespring password
+              required:
+              - app_id
