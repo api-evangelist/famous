@@ -30,6 +30,8 @@ paths:
       tags:
       - v1
       operationId: getV1UsersMeSavedAddresses
+      summary: Get V1 users me saved addresses
+      x-summary-source: derived
   /v1/users/me/saved-cards:
     get:
       parameters:
@@ -51,6 +53,8 @@ paths:
       tags:
       - v1
       operationId: getV1UsersMeSavedCards
+      summary: Get V1 users me saved cards
+      x-summary-source: derived
   /v1/users/me:
     get:
       description: Returns the currently authenticated user
@@ -73,6 +77,8 @@ paths:
       tags:
       - v1
       operationId: getV1UsersMe
+      summary: Get V1 users me
+      x-summary-source: derived
   /v1/search-suggestions/trending:
     get:
       description: Get trending search results
@@ -82,6 +88,8 @@ paths:
       tags:
       - v1
       operationId: getV1SearchSuggestionsTrending
+      summary: Get V1 search suggestions trending
+      x-summary-source: derived
   /v1/rush-prices/{campaign_region_name}:
     get:
       description: GET active RushPrice offers in CampaignRegion
@@ -104,13 +112,12 @@ paths:
       tags:
       - v1
       operationId: getV1RushPricesCampaignRegionName
+      summary: Get V1 rush prices campaign region name
+      x-summary-source: derived
   /v1/recommenders/{recommender_id}/campaigns:
     get:
       summary: Paginated collection of campaigns produced by a recommender
-      description: '
-
-
-        Fetches a paginated collection of campaigns produced by a recommender.'
+      description: Fetches a paginated collection of campaigns produced by a recommender.
       parameters:
       - in: query
         name: app_id
@@ -147,10 +154,7 @@ paths:
   /v1/categories/{slug}/campaigns:
     get:
       summary: All campaigns in a category
-      description: '
-
-
-        Fetches all the campaigns within the specified category.'
+      description: Fetches all the campaigns within the specified category.
       parameters:
       - in: query
         name: app_id
@@ -226,6 +230,8 @@ paths:
       tags:
       - v1
       operationId: getV1CategoriesSlug
+      summary: Get V1 categories slug
+      x-summary-source: derived
   /v1/campaigns/{slug}:
     get:
       parameters:
@@ -253,13 +259,12 @@ paths:
       tags:
       - v1
       operationId: getV1CampaignsSlug
+      summary: Get V1 campaigns slug
+      x-summary-source: derived
   /v1/auth-tokens:
     post:
       summary: Logs in a user and returns an OAuth token
-      description: '
-
-
-        Make the below request using your Teespring email and password, along with the `app_id` provided to you by Teespring. Copy the access token from the response and include it as the access_token url parameter for all subsequent requests. The token will expire after 24 hours and require a new request. Never share your access token with anyone. It will allow them to access your Teespring data until it expires.'
+      description: Make the below request using your Teespring email and password, along with the `app_id` provided to you by Teespring. Copy the access token from the response and include it as the access_token url parameter for all subsequent requests. The token will expire after 24 hours and require a new request. Never share your access token with anyone. It will allow them to access your Teespring data until it expires.
       responses:
         '201':
           description: Logs in a user and returns an OAuth token

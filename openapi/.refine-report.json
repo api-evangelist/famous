@@ -1,0 +1,26 @@
+{
+  "provider": "famous",
+  "sources": [
+    "_original/famous-spring-api-swagger.json"
+  ],
+  "outputs": [
+    "famous-internal-api-openapi.yml",
+    "famous-seller-api-openapi.yml",
+    "famous-v1-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [
+    "famous-spring-api-swagger.json: info.title missing"
+  ],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "famous-spring-api-swagger.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "famous-internal-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "famous-seller-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "famous-v1-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

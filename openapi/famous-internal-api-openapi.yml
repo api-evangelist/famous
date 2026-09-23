@@ -6,7 +6,7 @@ info:
 servers:
 - url: https://api.teespring.com/
 tags:
-- name: internal
+- name: Internal
   description: Operations about internals
 paths:
   /internal/v1/stripe/dispute_closed:
@@ -16,7 +16,7 @@ paths:
         '201':
           description: Register that a dispute was closed.
       tags:
-      - internal
+      - Internal
       operationId: postInternalV1StripeDisputeClosed
       requestBody:
         content:
@@ -33,6 +33,8 @@ paths:
               required:
               - data[object][id]
               - data[object][status]
+      summary: Post internal V1 stripe dispute closed
+      x-summary-source: derived
   /internal/v1/stripe/dispute_created:
     post:
       description: Register that a new dispute was created.
@@ -40,7 +42,7 @@ paths:
         '201':
           description: Register that a new dispute was created.
       tags:
-      - internal
+      - Internal
       operationId: postInternalV1StripeDisputeCreated
       requestBody:
         content:
@@ -64,3 +66,5 @@ paths:
               - data[object][id]
               - data[object][charge]
               - data[object][status]
+      summary: Post internal V1 stripe dispute created
+      x-summary-source: derived
