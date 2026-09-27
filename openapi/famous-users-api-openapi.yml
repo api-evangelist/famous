@@ -1,0 +1,79 @@
+openapi: 3.2.0
+info:
+  version: 0.0.1
+  title: Famous Users API
+servers:
+- url: https://api.teespring.com/
+tags:
+- name: Users
+paths:
+  /v1/users/me/saved-addresses:
+    get:
+      parameters:
+      - in: query
+        name: app_id
+        description: app ID (provided by Teespring)
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: access_token
+        description: authentication token obtained from the V1 Auth API
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: get SavedAddress(s)
+      tags:
+      - Users
+      operationId: getV1UsersMeSavedAddresses
+      summary: Get V1 users me saved addresses
+      x-summary-source: derived
+  /v1/users/me/saved-cards:
+    get:
+      parameters:
+      - in: query
+        name: app_id
+        description: app ID (provided by Teespring)
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: access_token
+        description: authentication token obtained from the V1 Auth API
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: get SavedCard(s)
+      tags:
+      - Users
+      operationId: getV1UsersMeSavedCards
+      summary: Get V1 users me saved cards
+      x-summary-source: derived
+  /v1/users/me:
+    get:
+      description: Returns the currently authenticated user
+      parameters:
+      - in: query
+        name: app_id
+        description: app ID (provided by Teespring)
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: access_token
+        description: authentication token obtained from the V1 Auth API
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns the currently authenticated user
+      tags:
+      - Users
+      operationId: getV1UsersMe
+      summary: Get V1 users me
+      x-summary-source: derived

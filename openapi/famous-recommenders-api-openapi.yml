@@ -1,0 +1,46 @@
+openapi: 3.2.0
+info:
+  version: 0.0.1
+  title: Famous Recommenders API
+servers:
+- url: https://api.teespring.com/
+tags:
+- name: Recommenders
+paths:
+  /v1/recommenders/{recommender_id}/campaigns:
+    get:
+      summary: Paginated collection of campaigns produced by a recommender
+      description: Fetches a paginated collection of campaigns produced by a recommender.
+      parameters:
+      - in: query
+        name: app_id
+        description: app ID (provided by Teespring)
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: page
+        description: page number to view
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - in: query
+        name: per_page
+        description: number of records per page
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - in: path
+        name: recommender_id
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Paginated collection of campaigns produced by a recommender
+      tags:
+      - Recommenders
+      operationId: getV1RecommendersRecommenderIdCampaigns

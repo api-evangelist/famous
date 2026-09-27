@@ -1,0 +1,20 @@
+openapi: 3.2.0
+info:
+  version: 0.0.1
+  title: Famous Search Suggestions API
+servers:
+- url: https://api.teespring.com/
+tags:
+- name: Search Suggestions
+paths:
+  /v1/search-suggestions/trending:
+    get:
+      description: Get trending search results
+      responses:
+        '200':
+          description: Get trending search results
+      tags:
+      - Search Suggestions
+      operationId: getV1SearchSuggestionsTrending
+      summary: Get V1 search suggestions trending
+      x-summary-source: derived

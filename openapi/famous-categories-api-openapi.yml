@@ -1,0 +1,90 @@
+openapi: 3.2.0
+info:
+  version: 0.0.1
+  title: Famous Categories API
+servers:
+- url: https://api.teespring.com/
+tags:
+- name: Categories
+paths:
+  /v1/categories/{slug}/campaigns:
+    get:
+      summary: All campaigns in a category
+      description: Fetches all the campaigns within the specified category.
+      parameters:
+      - in: query
+        name: app_id
+        description: app ID (provided by Teespring)
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: page
+        description: page number to view
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - in: query
+        name: per_page
+        description: number of records per page
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: All campaigns in a category
+      tags:
+      - Categories
+      operationId: getV1CategoriesSlugCampaigns
+  /v1/categories/{slug}:
+    get:
+      description: Get category metdata
+      parameters:
+      - in: query
+        name: app_id
+        description: app ID (provided by Teespring)
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: page
+        description: page number to view
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - in: query
+        name: per_page
+        description: number of records per page
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - in: query
+        name: include_campaigns
+        description: Also include active campaigns
+        required: false
+        schema:
+          type: boolean
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Get category metdata
+      tags:
+      - Categories
+      operationId: getV1CategoriesSlug
+      summary: Get V1 categories slug
+      x-summary-source: derived

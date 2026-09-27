@@ -1,0 +1,36 @@
+openapi: 3.2.0
+info:
+  version: 0.0.1
+  title: Famous Auth Tokens API
+servers:
+- url: https://api.teespring.com/
+tags:
+- name: Auth Tokens
+paths:
+  /v1/auth-tokens:
+    post:
+      summary: Logs in a user and returns an OAuth token
+      description: Make the below request using your Teespring email and password, along with the `app_id` provided to you by Teespring. Copy the access token from the response and include it as the access_token url parameter for all subsequent requests. The token will expire after 24 hours and require a new request. Never share your access token with anyone. It will allow them to access your Teespring data until it expires.
+      responses:
+        '201':
+          description: Logs in a user and returns an OAuth token
+      tags:
+      - Auth Tokens
+      operationId: postV1AuthTokens
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                app_id:
+                  type: string
+                  description: app ID (provided by Teespring)
+                email:
+                  type: string
+                  description: Teespring e-mail address
+                password:
+                  type: string
+                  description: Teespring password
+              required:
+              - app_id

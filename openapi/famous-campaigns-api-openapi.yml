@@ -1,0 +1,38 @@
+openapi: 3.2.0
+info:
+  version: 0.0.1
+  title: Famous Campaigns API
+servers:
+- url: https://api.teespring.com/
+tags:
+- name: Campaigns
+paths:
+  /v1/campaigns/{slug}:
+    get:
+      parameters:
+      - in: query
+        name: app_id
+        description: app ID (provided by Teespring)
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: currency
+        description: The currency to use for pricing
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: get Campaign(s)
+      tags:
+      - Campaigns
+      operationId: getV1CampaignsSlug
+      summary: Get V1 campaigns slug
+      x-summary-source: derived

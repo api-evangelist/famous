@@ -4,11 +4,19 @@
     "_original/famous-spring-api-swagger.json"
   ],
   "outputs": [
+    "famous-auth-tokens-api-openapi.yml",
+    "famous-campaigns-api-openapi.yml",
+    "famous-categories-api-openapi.yml",
+    "famous-recommenders-api-openapi.yml",
+    "famous-rush-prices-api-openapi.yml",
+    "famous-search-suggestions-api-openapi.yml",
+    "famous-users-api-openapi.yml",
     "famous-internal-api-openapi.yml",
-    "famous-seller-api-openapi.yml",
-    "famous-v1-api-openapi.yml"
+    "famous-seller-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [
     "famous-spring-api-swagger.json: info.title missing"
@@ -16,7 +24,25 @@
   "notes": [
     "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "famous-spring-api-swagger.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
-    "apis.yml register: already-registered"
+    "famous-spring-api-swagger.json: tagged paths GET /v1/users/me/saved-addresses -> Users",
+    "famous-spring-api-swagger.json: tagged paths GET /v1/users/me/saved-cards -> Users",
+    "famous-spring-api-swagger.json: tagged paths GET /v1/users/me -> Users",
+    "famous-spring-api-swagger.json: tagged paths GET /v1/search-suggestions/trending -> Search Suggestions",
+    "famous-spring-api-swagger.json: tagged paths GET /v1/rush-prices/{campaign_region_name} -> Rush Prices",
+    "famous-spring-api-swagger.json: tagged paths GET /v1/recommenders/{recommender_id}/campaigns -> Recommenders",
+    "famous-spring-api-swagger.json: tagged paths GET /v1/categories/{slug}/campaigns -> Categories",
+    "famous-spring-api-swagger.json: tagged paths GET /v1/categories/{slug} -> Categories",
+    "famous-spring-api-swagger.json: tagged paths GET /v1/campaigns/{slug} -> Campaigns",
+    "famous-spring-api-swagger.json: tagged paths POST /v1/auth-tokens -> Auth Tokens",
+    "famous-spring-api-swagger.json: declared missing tag: Auth Tokens",
+    "famous-spring-api-swagger.json: declared missing tag: Campaigns",
+    "famous-spring-api-swagger.json: declared missing tag: Categories",
+    "famous-spring-api-swagger.json: declared missing tag: Recommenders",
+    "famous-spring-api-swagger.json: declared missing tag: Rush Prices",
+    "famous-spring-api-swagger.json: declared missing tag: Search Suggestions",
+    "famous-spring-api-swagger.json: declared missing tag: Users",
+    "superseded outputs removed: famous-v1-api-openapi.yml",
+    "apis.yml register: written (+7 apis, 9 total)"
   ],
   "skipped": [
     "famous-internal-api-openapi.yml: previously refined output, superseded by openapi/_original/",

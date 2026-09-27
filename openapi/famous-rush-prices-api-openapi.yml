@@ -1,0 +1,33 @@
+openapi: 3.2.0
+info:
+  version: 0.0.1
+  title: Famous Rush Prices API
+servers:
+- url: https://api.teespring.com/
+tags:
+- name: Rush Prices
+paths:
+  /v1/rush-prices/{campaign_region_name}:
+    get:
+      description: GET active RushPrice offers in CampaignRegion
+      parameters:
+      - in: query
+        name: country_id
+        description: Country ID, for filtering
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: campaign_region_name
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: GET active RushPrice offers in CampaignRegion
+      tags:
+      - Rush Prices
+      operationId: getV1RushPricesCampaignRegionName
+      summary: Get V1 rush prices campaign region name
+      x-summary-source: derived

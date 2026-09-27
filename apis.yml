@@ -144,16 +144,196 @@ apis:
     url: conformance/famous-conformance.yml
   - type: Lifecycle
     url: lifecycle/famous-lifecycle.yml
-- aid: famous:famous-v1-api
-  name: Famous V1 API
-  description: Operations about v1s
+- aid: famous:famous-auth-tokens-api
+  name: Famous Auth Tokens API
+  description: The Auth Tokens API from Famous — 1 operation(s) for auth tokens.
   humanURL: https://api.teespring.com/docs
   baseURL: https://api.teespring.com/
   tags:
-  - v1
+  - Auth Tokens
   properties:
   - type: OpenAPI
-    url: openapi/famous-v1-api-openapi.yml
+    url: openapi/famous-auth-tokens-api-openapi.yml
+  - type: Documentation
+    url: https://api.teespring.com/docs
+  - type: APIReference
+    url: https://api.teespring.com/docs
+  - type: GettingStarted
+    url: https://api.teespring.com/docs
+  - type: Authentication
+    url: authentication/famous-authentication.yml
+  - type: Conventions
+    url: conventions/famous-conventions.yml
+  - type: ErrorCatalog
+    url: errors/famous-problem-types.yml
+  - type: DataModel
+    url: data-model/famous-data-model.yml
+  - type: RateLimits
+    url: rate-limits/famous-rate-limits.yml
+  - type: Conformance
+    url: conformance/famous-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/famous-lifecycle.yml
+- aid: famous:famous-campaigns-api
+  name: Famous Campaigns API
+  description: The Campaigns API from Famous — 1 operation(s) for campaigns.
+  humanURL: https://api.teespring.com/docs
+  baseURL: https://api.teespring.com/
+  tags:
+  - Campaigns
+  properties:
+  - type: OpenAPI
+    url: openapi/famous-campaigns-api-openapi.yml
+  - type: Documentation
+    url: https://api.teespring.com/docs
+  - type: APIReference
+    url: https://api.teespring.com/docs
+  - type: GettingStarted
+    url: https://api.teespring.com/docs
+  - type: Authentication
+    url: authentication/famous-authentication.yml
+  - type: Conventions
+    url: conventions/famous-conventions.yml
+  - type: ErrorCatalog
+    url: errors/famous-problem-types.yml
+  - type: DataModel
+    url: data-model/famous-data-model.yml
+  - type: RateLimits
+    url: rate-limits/famous-rate-limits.yml
+  - type: Conformance
+    url: conformance/famous-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/famous-lifecycle.yml
+- aid: famous:famous-categories-api
+  name: Famous Categories API
+  description: The Categories API from Famous — 2 operation(s) for categories.
+  humanURL: https://api.teespring.com/docs
+  baseURL: https://api.teespring.com/
+  tags:
+  - Categories
+  properties:
+  - type: OpenAPI
+    url: openapi/famous-categories-api-openapi.yml
+  - type: Documentation
+    url: https://api.teespring.com/docs
+  - type: APIReference
+    url: https://api.teespring.com/docs
+  - type: GettingStarted
+    url: https://api.teespring.com/docs
+  - type: Authentication
+    url: authentication/famous-authentication.yml
+  - type: Conventions
+    url: conventions/famous-conventions.yml
+  - type: ErrorCatalog
+    url: errors/famous-problem-types.yml
+  - type: DataModel
+    url: data-model/famous-data-model.yml
+  - type: RateLimits
+    url: rate-limits/famous-rate-limits.yml
+  - type: Conformance
+    url: conformance/famous-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/famous-lifecycle.yml
+- aid: famous:famous-recommenders-api
+  name: Famous Recommenders API
+  description: The Recommenders API from Famous — 1 operation(s) for recommenders.
+  humanURL: https://api.teespring.com/docs
+  baseURL: https://api.teespring.com/
+  tags:
+  - Recommenders
+  properties:
+  - type: OpenAPI
+    url: openapi/famous-recommenders-api-openapi.yml
+  - type: Documentation
+    url: https://api.teespring.com/docs
+  - type: APIReference
+    url: https://api.teespring.com/docs
+  - type: GettingStarted
+    url: https://api.teespring.com/docs
+  - type: Authentication
+    url: authentication/famous-authentication.yml
+  - type: Conventions
+    url: conventions/famous-conventions.yml
+  - type: ErrorCatalog
+    url: errors/famous-problem-types.yml
+  - type: DataModel
+    url: data-model/famous-data-model.yml
+  - type: RateLimits
+    url: rate-limits/famous-rate-limits.yml
+  - type: Conformance
+    url: conformance/famous-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/famous-lifecycle.yml
+- aid: famous:famous-rush-prices-api
+  name: Famous Rush Prices API
+  description: The Rush Prices API from Famous — 1 operation(s) for rush prices.
+  humanURL: https://api.teespring.com/docs
+  baseURL: https://api.teespring.com/
+  tags:
+  - Rush Prices
+  properties:
+  - type: OpenAPI
+    url: openapi/famous-rush-prices-api-openapi.yml
+  - type: Documentation
+    url: https://api.teespring.com/docs
+  - type: APIReference
+    url: https://api.teespring.com/docs
+  - type: GettingStarted
+    url: https://api.teespring.com/docs
+  - type: Authentication
+    url: authentication/famous-authentication.yml
+  - type: Conventions
+    url: conventions/famous-conventions.yml
+  - type: ErrorCatalog
+    url: errors/famous-problem-types.yml
+  - type: DataModel
+    url: data-model/famous-data-model.yml
+  - type: RateLimits
+    url: rate-limits/famous-rate-limits.yml
+  - type: Conformance
+    url: conformance/famous-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/famous-lifecycle.yml
+- aid: famous:famous-search-suggestions-api
+  name: Famous Search Suggestions API
+  description: The Search Suggestions API from Famous — 1 operation(s) for search suggestions.
+  humanURL: https://api.teespring.com/docs
+  baseURL: https://api.teespring.com/
+  tags:
+  - Search Suggestions
+  properties:
+  - type: OpenAPI
+    url: openapi/famous-search-suggestions-api-openapi.yml
+  - type: Documentation
+    url: https://api.teespring.com/docs
+  - type: APIReference
+    url: https://api.teespring.com/docs
+  - type: GettingStarted
+    url: https://api.teespring.com/docs
+  - type: Authentication
+    url: authentication/famous-authentication.yml
+  - type: Conventions
+    url: conventions/famous-conventions.yml
+  - type: ErrorCatalog
+    url: errors/famous-problem-types.yml
+  - type: DataModel
+    url: data-model/famous-data-model.yml
+  - type: RateLimits
+    url: rate-limits/famous-rate-limits.yml
+  - type: Conformance
+    url: conformance/famous-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/famous-lifecycle.yml
+- aid: famous:famous-users-api
+  name: Famous Users API
+  description: The Users API from Famous — 3 operation(s) for users.
+  humanURL: https://api.teespring.com/docs
+  baseURL: https://api.teespring.com/
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/famous-users-api-openapi.yml
   - type: Documentation
     url: https://api.teespring.com/docs
   - type: APIReference
