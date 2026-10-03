@@ -14,9 +14,7 @@
     "famous-internal-api-openapi.yml",
     "famous-seller-api-openapi.yml"
   ],
-  "archived": [
-    "deleted 1 superseded output(s) from the previous generation"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [
     "famous-spring-api-swagger.json: info.title missing"
@@ -41,12 +39,17 @@
     "famous-spring-api-swagger.json: declared missing tag: Rush Prices",
     "famous-spring-api-swagger.json: declared missing tag: Search Suggestions",
     "famous-spring-api-swagger.json: declared missing tag: Users",
-    "superseded outputs removed: famous-v1-api-openapi.yml",
-    "apis.yml register: written (+7 apis, 9 total)"
+    "apis.yml register: already-registered"
   ],
   "skipped": [
+    "famous-auth-tokens-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "famous-campaigns-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "famous-categories-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "famous-internal-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "famous-recommenders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "famous-rush-prices-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "famous-search-suggestions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "famous-seller-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "famous-v1-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+    "famous-users-api-openapi.yml: previously refined output, superseded by openapi/_original/"
   ]
 }
