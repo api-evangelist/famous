@@ -330,6 +330,8 @@ apis:
   humanURL: https://api.teespring.com/docs
   baseURL: https://api.teespring.com/
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
