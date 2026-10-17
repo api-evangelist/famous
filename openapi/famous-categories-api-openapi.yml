@@ -86,5 +86,5 @@ paths:
       tags:
       - Categories
       operationId: getV1CategoriesSlug
-      summary: Get V1 categories slug
+      summary: Get V1Categories slug
       x-summary-source: derived

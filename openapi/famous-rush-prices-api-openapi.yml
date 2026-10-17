@@ -29,5 +29,5 @@ paths:
       tags:
       - Rush Prices
       operationId: getV1RushPricesCampaignRegionName
-      summary: Get V1 rush prices campaign region name
+      summary: Get V1Rush prices campaign region name
       x-summary-source: derived

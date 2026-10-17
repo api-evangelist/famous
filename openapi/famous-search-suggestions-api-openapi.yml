@@ -16,5 +16,5 @@ paths:
       tags:
       - Search Suggestions
       operationId: getV1SearchSuggestionsTrending
-      summary: Get V1 search suggestions trending
+      summary: Get V1Search suggestions trending
       x-summary-source: derived

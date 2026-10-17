@@ -34,5 +34,5 @@ paths:
       tags:
       - Campaigns
       operationId: getV1CampaignsSlug
-      summary: Get V1 campaigns slug
+      summary: Get V1Campaigns slug
       x-summary-source: derived

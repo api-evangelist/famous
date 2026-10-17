@@ -18,7 +18,7 @@ paths:
       tags:
       - Seller
       operationId: getSellerV1MessagesVariables
-      summary: Get seller V1 messages variables
+      summary: Get seller V1Messages variables
       x-summary-source: derived
   /seller/v1/messages/send:
     post:
@@ -49,7 +49,7 @@ paths:
               - email_type_id
               - subject
               - content
-      summary: Post seller V1 messages send
+      summary: Post seller V1Messages send
       x-summary-source: derived
   /seller/v1/messages/recipients:
     get:
@@ -77,7 +77,7 @@ paths:
       tags:
       - Seller
       operationId: getSellerV1MessagesRecipients
-      summary: Get seller V1 messages recipients
+      summary: Get seller V1Messages recipients
       x-summary-source: derived
   /seller/v1/summary:
     get:
@@ -118,7 +118,7 @@ paths:
       tags:
       - Seller
       operationId: getSellerV1Summary
-      summary: Get seller V1 summary
+      summary: Get seller V1Summary
       x-summary-source: derived
   /seller/v1/promotions:
     get:
@@ -198,7 +198,7 @@ paths:
       tags:
       - Seller
       operationId: getSellerV1DashboardVolumeDiscount
-      summary: Get seller V1 dashboard volume discount
+      summary: Get seller V1Dashboard volume discount
       x-summary-source: derived
   /seller/v1/dashboard:
     get:
@@ -259,7 +259,7 @@ paths:
       tags:
       - Seller
       operationId: getSellerV1OrdersForBuyerFromOrderLookupNumber
-      summary: Get seller V1 orders for buyer from order lookup number
+      summary: Get seller V1Orders for buyer from order lookup number
       x-summary-source: derived
   /seller/v1/orders:
     get:

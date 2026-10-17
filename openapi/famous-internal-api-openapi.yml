@@ -33,7 +33,7 @@ paths:
               required:
               - data[object][id]
               - data[object][status]
-      summary: Post internal V1 stripe dispute closed
+      summary: Post internal V1Stripe dispute closed
       x-summary-source: derived
   /internal/v1/stripe/dispute_created:
     post:
@@ -66,5 +66,5 @@ paths:
               - data[object][id]
               - data[object][charge]
               - data[object][status]
-      summary: Post internal V1 stripe dispute created
+      summary: Post internal V1Stripe dispute created
       x-summary-source: derived

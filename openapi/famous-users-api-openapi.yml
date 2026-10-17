@@ -28,7 +28,7 @@ paths:
       tags:
       - Users
       operationId: getV1UsersMeSavedAddresses
-      summary: Get V1 users me saved addresses
+      summary: Get V1Users me saved addresses
       x-summary-source: derived
   /v1/users/me/saved-cards:
     get:
@@ -51,7 +51,7 @@ paths:
       tags:
       - Users
       operationId: getV1UsersMeSavedCards
-      summary: Get V1 users me saved cards
+      summary: Get V1Users me saved cards
       x-summary-source: derived
   /v1/users/me:
     get:
@@ -75,5 +75,5 @@ paths:
       tags:
       - Users
       operationId: getV1UsersMe
-      summary: Get V1 users me
+      summary: Get V1Users me
       x-summary-source: derived
