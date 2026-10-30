@@ -64,6 +64,136 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Famous is a company surfaced as a portfolio company of insight-partners and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Famous (famous.co) returns a 301 to Amaze (amaze.co), the creator-commerce platform operated by Amaze Holdings, Inc. Amaze describes itself as building the operating system for creator-led businesses, bringing commerce, content, media, and live shopping into one connected ecosystem. Its products include Amaze Commerce (creator storefronts and AI-powered product creation, at amazecommerce.com), Spring (spri.ng, the creator storefront brand formerly known as Teespring), Amaze Live (shoppable livestreams), and Amaze Media (performance marketing and audience targeting for brands). The company reports 190K+ creators, 1.7B+ lifetime fan reach, and operations across 183 countries. Surfaced originally as a portfolio company of Insight Partners. A public, machine-readable API surface WAS found on the second enrichment pass: the Spring Seller API, a Swagger 2.0 contract with 24 operations served live at api.teespring.com (Spring's legacy API host), documented behind a Swagger UI at https://api.teespring.com/docs. Amaze also publishes first-party Protobuf/gRPC service contracts to npm under the @teespring scope.
 
-Backed by: insight-partners — https://famous.co/
+**Areas:** Company · Creator Economy · Commerce · Live Shopping · Media · E-Commerce · Marketing · Print on Demand · Merchandise · Storefront · Order · Payouts
+
+## Famous on APIs.io
+
+Everything profiled for Famous is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/famous/](https://apis.io/providers/famous/)** — or go straight to one of the APIs or properties below.
+
+### APIs (9)
+
+- [Famous Internal API](https://apis.io/apis/famous/famous-internal-api/) — Operations about internals
+- [Famous Seller API](https://apis.io/apis/famous/famous-seller-api/) — Operations about sellers
+- [Famous Auth Tokens API](https://apis.io/apis/famous/famous-auth-tokens-api/) — The Auth Tokens API from Famous — 1 operation(s) for auth tokens.
+- [Famous Campaigns API](https://apis.io/apis/famous/famous-campaigns-api/) — The Campaigns API from Famous — 1 operation(s) for campaigns.
+- [Famous Categories API](https://apis.io/apis/famous/famous-categories-api/) — The Categories API from Famous — 2 operation(s) for categories.
+- [Famous Recommenders API](https://apis.io/apis/famous/famous-recommenders-api/) — The Recommenders API from Famous — 1 operation(s) for recommenders.
+- [Famous Rush Prices API](https://apis.io/apis/famous/famous-rush-prices-api/) — The Rush Prices API from Famous — 1 operation(s) for rush prices.
+- [Famous Search Suggestions API](https://apis.io/apis/famous/famous-search-suggestions-api/) — The Search Suggestions API from Famous — 1 operation(s) for search suggestions.
+- [Famous Users API](https://apis.io/apis/famous/famous-users-api/) — The Users API from Famous — 3 operation(s) for users.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [famous](https://apis.io/servers/famous/famous/)
+
+#### Collections (1)
+
+Postman and Open Collection request collections.
+
+- [API Collection](https://apis.io/collections/famous/open-famous-spring-api-swagger/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Famous Spring Api Overlay](https://apis.io/overlays/famous/famous-spring-api-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Famous Authentication](https://apis.io/security/famous/famous-authentication/)
+- [Famous Domain Security](https://apis.io/security/famous/famous-domain-security/)
+- [Famous Vulnerability Disclosure](https://apis.io/security/famous/famous-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Famous Plans Pricing](https://apis.io/plans/famous/famous-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Famous Rate Limits](https://apis.io/rate-limits/famous/famous-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://amaze.co/)
+- [Documentation](https://api.teespring.com/docs)
+- [Getting started](https://api.teespring.com/docs)
+- [API reference](https://api.teespring.com/docs)
+- [Pricing](https://amazecommerce.com/pricing)
+- [Sign up](https://app.amazecommerce.com/signup)
+- [Support](https://amaze.co/contact)
+- [Blog](https://blog.amaze.co/)
+- [Security](https://spri.ng/about/security)
+- [Terms of service](https://www.amaze.co/policies/commerce/terms-of-service)
+- [Privacy policy](https://www.amaze.co/policies/corporate/privacy-policy)
+- [GitHub](https://github.com/teespring)
+
+## API Evangelist rating
+
+**Kin Score 45.0** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 38.4 |
+| Contract governance | 4.5 |
+| Operational transparency | 13.2 |
+| Developer ergonomics | 48.2 |
+| Access clarity | 76.3 |
+
+**Agent readiness 21.3** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 30.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/famous/](https://apis.io/providers/famous/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Famous: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/famous/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
